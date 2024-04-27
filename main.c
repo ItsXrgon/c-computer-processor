@@ -4,8 +4,8 @@
 
 #define MAX_INSTRUCTION_LENGTH 100
 int data_memory[2048][8];
-int generalRegisters[64];
-int SREG[5]; // SREG[0] = C, SREG[1] = V, SREG[2] = N, SREG[3] = S, SREG[4] = Z
+int generalRegisters[64][8];
+int SREG[8]; // SREG[0] = C, SREG[1] = V, SREG[2] = N, SREG[3] = S, SREG[4] = Z
 int pc = 0;
 int instruction_memory[1024][16];
 
