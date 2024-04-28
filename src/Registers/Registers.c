@@ -1,6 +1,9 @@
+
 int generalRegisters[64];
 int SREG[8]; // SREG[0] = C, SREG[1] = V, SREG[2] = N, SREG[3] = S, SREG[4] = Z
 int pc = 0;
+
+
 
 int ReadRegister(int reg)
 {
@@ -99,4 +102,32 @@ void ResetRegisters()
         SREG[i] = 0;
     }
     pc = 0;
+}
+
+
+void PrintStatusRegister(){
+    printf("Status Register:\n");
+    printf("C: %d\n", SREG[0]);
+    printf("V: %d\n", SREG[1]);
+    printf("N: %d\n", SREG[2]);
+    printf("S: %d\n", SREG[3]);
+    printf("Z: %d\n", SREG[4]);
+    printf("6: %d\n", SREG[5]);
+    printf("7: %d\n", SREG[6]);
+    printf("8: %d\n", SREG[7]);
+}
+
+void PrintAllRegisters()
+{
+    printf("General Registers:\n");
+    for (int i = 0; i < 64; i++)
+    {
+        printf("R%d: %d\n", i, generalRegisters[i]);
+    }
+    printf("Special Registers:\n");
+    printf("C: %d\n", SREG[0]);
+    printf("V: %d\n", SREG[1]);
+    printf("N: %d\n", SREG[2]);
+    printf("S: %d\n", SREG[3]);
+    printf("Z: %d\n", SREG[4]);
 }

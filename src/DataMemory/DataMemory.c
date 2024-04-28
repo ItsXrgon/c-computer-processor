@@ -1,5 +1,6 @@
-int data_memory[2048];
 
+
+int data_memory[2048];
 
 int loadWord(int address){
     return data_memory[address];
@@ -9,7 +10,7 @@ void storeWord(int address, int value){
     data_memory[address] = value;
 }
 
-void toString(){
+void PrintAllMemory(){
     for (int i = 0; i < 2048; i++)
     {
         printf("%d: %d\n", i, data_memory[i]);
