@@ -1,5 +1,5 @@
-#include "../Registers/Registers.h"
-#include "../DataMemory/DataMemory.h"
+#include "../Headers/Registers.h"
+#include "../Headers/DataMemory.h"
 
 int ALU(int operand1, int operand2, int operation){
     int result;

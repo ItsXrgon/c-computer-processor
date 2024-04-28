@@ -1,7 +1,7 @@
-#include "InstructionMemory/InstructionMemory.h"
-#include "DataMemory/DataMemory.h"
-#include "Registers/Registers.h"
-#include "Main.h"
+#include "Headers/InstructionMemory.h"
+#include "Headers/DataMemory.h"
+#include "Headers/Registers.h"
+#include "Headers/Main.h"
 
 #include <stdio.h>
 #include <stdlib.h>

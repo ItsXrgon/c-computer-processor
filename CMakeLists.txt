@@ -1,8 +1,12 @@
 cmake_minimum_required(VERSION 3.12)
-project(c-computer-processor)
+project(c-computer-processor VERSION 1.0.0 LANGUAGES C)
 
-# Set C++ standard
-set(CMAKE_CXX_STANDARD 11)
+# Set C standard
+set(CMAKE_C_STANDARD 11)
+
+# Assuming your header files are in a folder named "headers"
+include_directories(Headers)
+
 
 # Add source files
 set(SOURCES
@@ -15,7 +19,9 @@ set(SOURCES
 )
 
 # Add executable target
-add_executable(runner ${SOURCES})
+add_executable(run ${SOURCES})
 
 # Add include directories
-target_include_directories(runner PRIVATE include)
+target_include_directories(run PRIVATE include)
+
+
