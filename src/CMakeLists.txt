@@ -15,7 +15,7 @@ set(SOURCES
 )
 
 # Add executable target
-add_executable(computer_processor ${SOURCES})
+add_executable(runner ${SOURCES})
 
 # Add include directories
-target_include_directories(computer_processor PRIVATE include)
+target_include_directories(runner PRIVATE include)

@@ -1,3 +1,4 @@
+#include "../Registers/Registers.h"
 struct Instruction{
     int opcode;
     int operand1;

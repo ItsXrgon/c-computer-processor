@@ -6,6 +6,9 @@
 
 /* Prototypes for the functions */
 
-
+int ReadDataMemory(int address);
+void WriteDataMemory(int address, int value);
+void PrintAllMemory();
+void ResetDataMemory();
 
 #endif

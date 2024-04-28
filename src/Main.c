@@ -1,4 +1,11 @@
+#include "InstructionMemory/InstructionMemory.h"
+#include "DataMemory/DataMemory.h"
+#include "Registers/Registers.h"
 #include "Main.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 int ClockCycle = 0;
 int MaxClockCycles ;
@@ -37,8 +44,8 @@ void ResetProcessor(){
 void PrintStatus() {
     printf("Clock Cycle: %d\n", ClockCycle);
     // Assuming you have functions to get the current instruction and parameters for each stage
-    printf("Fetch Stage: %s\n", GetCurrentFetchInstruction());
-    printf("Decode Stage: %s\n", GetCurrentDecodeInstruction());
+//     printf("Fetch Stage: %s\n", GetCurrentFetchInstruction());
+//     printf("Decode Stage: %s\n", GetCurrentDecodeInstruction());
 }
 
 int main(){

@@ -2,11 +2,11 @@
 
 int data_memory[2048];
 
-int loadWord(int address){
+int ReadDataMemory(int address){
     return data_memory[address];
 }
 
-void storeWord(int address, int value){
+void WriteDataMemory(int address, int value){
     data_memory[address] = value;
 }
 
