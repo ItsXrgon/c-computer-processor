@@ -1,6 +1,7 @@
 int generalRegisters[64];
 int SREG[8]; // SREG[0] = C, SREG[1] = V, SREG[2] = N, SREG[3] = S, SREG[4] = Z
 int pc = 0;
+
 int ReadRegister(int reg)
 {
     return generalRegisters[reg];
