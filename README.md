@@ -56,11 +56,17 @@ b. Pipeline: 3 instructions (maximum) running in parallel
 
 You are required to understand the pattern in the example and implement it.
 
-## Instruction Set Architecture
+## Instruction Memory
 
-1. Instruction Size: 16 bits
-2. Instruction Types: 2
-3. Instruction Count: 12
+- Memory Size: 1024 rows
+- Row : 16 bits
+- Addresses: 0 to 1023
+  - word addressable
+- Types: 2
+
+### Instruction Set Architecture
+
+- Instruction Count: 12
 
 - The opcodes are from 0 to 11 according to the instructions order in the following table:
 
@@ -72,9 +78,56 @@ You are required to understand the pattern in the example and implement it.
   | Move Immediate         | MOVI R1 IMM    | R1 = IMM                        |
   | Branch if Equal Zero   | BEQZ R1 IMM    | if(R1 == 0){PC = PC + 1 + IMM } |
   | And IMM                | ANDI R1 IMM    | R1 = R1 & IMM                   |
-  | Exclusive OR           | EOR R1 R2      | R1 = R1 XOR R2                  |
+  | Exclusive OR           | EOR R1 R2      | R1 = R1 ⊕ R2                    |
   | Branch Register        | BR R1 R2       | PC = R1 concat R2               |
   | Shift Arithmetic left  | SAL R1 IMM     | R1 = R1 << IMM                  |
   | Shift Arithmetic Right | SAR R1 IMM     | R1 = R1 >> IMM                  |
   | load to Register       | LDR R1 Address | R1 = MEM[Address]               |
   | Store from Register    | STR R1 Address | MEM[Address] = R1               |
+
+## Registers
+
+- Size: 8 bits
+- General Purpose : 64 ( R0 to R63 )
+- Status:
+
+  - Carry Flag (C):
+    -Check on 9th bit (bit 8) of UNSIGNED[VALUE1] OP UNSIGNED[VALUE2] == 1 or not
+
+  - Overflow flag (V):
+
+    - Indicates when the result of a signed number operation is too large, causing the high-order bit to overflow into the sign bit.
+
+    - If 2 numbers:
+
+      - added:both have the same sign, then overflow occurs (V = 1) if and only if the result has the opposite sign.
+        Overflow never occurs when adding operands with different signs.
+
+      - subtracted:and their signs are different, then overflow occurs (V= 1) if and only if the result has the same sign as the subtrahend.
+
+    - updated every ADD and SUB instruction.
+
+  - Negative flag (N):
+    - N = 1 if result is negative.
+    - N = 0 if result is positive or zero.
+    - updated every ADD, SUB, MUL, ANDI, EOR, SAL, and SAR instruction.
+  - Sign flag (S):
+    - S = N ⊕ V
+    - updated every ADD and SUB instruction.
+  - Zero flag (Z):
+    - Z = 1 if result is 0.
+    - Z = 0 if result is not 0.
+    - updated every ADD, SUB, MUL, ANDI, EOR, SAL, and SAR instruction.
+
+- Program Counter
+  - size : 16 bits
+  - As each instruction gets fetched, the program counter is incremented to point to the next instruction to be executed
+
+A flag value can only be updated by the instructions related to it.
+
+## Data Memory
+
+- Size: 2048 rows
+- Row : 8 bits
+- Address : 0 to 2047
+  - word/byte adressable
