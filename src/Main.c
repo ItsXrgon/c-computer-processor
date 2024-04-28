@@ -10,11 +10,11 @@
 int ClockCycle = 0;
 int MaxClockCycles ;
 
-void LoadProgram(const char *file_name){
+void LoadProgram(char *file_name){
     FILE *file = fopen(file_name, "r");
     if (file == NULL)
     {
-        printf("Error: File not found\n");
+        printf("Error: Assembly file not found\n");
         exit(1);
     }
     int address = 0;
@@ -50,7 +50,7 @@ void PrintStatus() {
 
 int main(){
     ResetProcessor();
-    LoadProgram("assembly.txt");
+    LoadProgram("./Test/test2.txt");
 
     // Program Workflow
     printf("Program Workflow:\n");

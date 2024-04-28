@@ -19,9 +19,9 @@ set(SOURCES
 )
 
 # Add executable target
-add_executable(run ${SOURCES})
+add_executable(c-computer-processor  ${SOURCES})
 
 # Add include directories
-target_include_directories(run PRIVATE include)
+target_include_directories(c-computer-processor PUBLIC include)
 
 
