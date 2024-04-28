@@ -122,7 +122,9 @@ void PrintAllRegisters()
     printf("General Registers:\n");
     for (int i = 0; i < 64; i++)
     {
+        if(generalRegisters[i] != 0){
         printf("R%d: %d\n", i, generalRegisters[i]);
+        }
     }
     printf("Special Registers:\n");
     printf("C: %d\n", SREG[0]);

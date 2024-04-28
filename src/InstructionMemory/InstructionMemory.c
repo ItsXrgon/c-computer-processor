@@ -139,5 +139,15 @@ void ResetInstructionMemory(){
         instruction_memory[i].value2 = 0;
         instruction_memory[i].type = 'R';
     }
+}
+
+void PrintAllInstructionMemory(){
+    for (int i = 0; i < 1024; i++)
+    {
+        if (instruction_memory[i].opcode != 0)
+        {
+            printf("%d: %d %d %d %c\n", i, instruction_memory[i].opcode, instruction_memory[i].operand1, instruction_memory[i].value2, instruction_memory[i].type);
+        }
+    }
     
 }

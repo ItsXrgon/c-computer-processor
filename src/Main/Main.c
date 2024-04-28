@@ -1,7 +1,7 @@
-#include "Headers/InstructionMemory.h"
-#include "Headers/DataMemory.h"
-#include "Headers/Registers.h"
-#include "Headers/Main.h"
+#include "../Headers/InstructionMemory.h"
+#include "../Headers/DataMemory.h"
+#include "../Headers/Registers.h"
+#include "../Headers/Main.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -10,11 +10,13 @@
 int ClockCycle = 0;
 int MaxClockCycles ;
 
-void LoadProgram(char *file_name){
-    FILE *file = fopen(file_name, "r");
+void LoadProgram(char* file_name){
+    FILE* file = fopen(file_name, "r");
     if (file == NULL)
     {
         printf("Error: Assembly file not found\n");
+        printf("Please make sure the file exists\n");
+        printf("Exiting...\n");
         exit(1);
     }
     int address = 0;
@@ -50,7 +52,7 @@ void PrintStatus() {
 
 int main(){
     ResetProcessor();
-    LoadProgram("./Test/test2.txt");
+    LoadProgram("../Test/test2.txt");
 
     // Program Workflow
     printf("Program Workflow:\n");
@@ -62,7 +64,7 @@ int main(){
     printf("Executing Clock Cycles:\n");
     while (ClockCycle < MaxClockCycles)
     {   
-
+        printf("Clock Cycle: %d\n", ClockCycle);
         Instruction instruction = fetch();
         decode(instruction);
         PrintStatus();
@@ -72,8 +74,10 @@ int main(){
     // Print final state of registers and memory
     printf("Final State of Registers:\n");
     PrintAllRegisters();
-    printf("Final State of Memory:\n");
-    PrintAllMemory();
+    printf("Final State of Data Memory:\n");
+    PrintAllDataMemory();
+    printf("Final State of Instruction Memory:\n");
+    PrintAllInstructionMemory();
 
     return 0;
 }

@@ -10,19 +10,18 @@ void WriteDataMemory(int address, int value){
     data_memory[address] = value;
 }
 
-void PrintAllMemory(){
+void PrintAllDataMemory(){
     for (int i = 0; i < 2048; i++)
-    {
+    {   
+        if (data_memory[i] != 0){
         printf("%d: %d\n", i, data_memory[i]);
+        }
     }
 }
 
 void ResetDataMemory(){
     for (int i = 0; i < 2048; i++)
     {
-        for (int j = 0; j < 8; j++)
-        {
-            data_memory[i] = 0;
-        }
+        data_memory[i] = 0;
     }
 }

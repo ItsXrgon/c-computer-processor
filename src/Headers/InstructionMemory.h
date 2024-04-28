@@ -20,6 +20,6 @@ Instruction fetch();
 void decode(Instruction instruction);
 void excute(int opcode, int operand1, int operand2);
 void ResetInstructionMemory();
-
+void PrintAllInstructionMemory();
 
 #endif

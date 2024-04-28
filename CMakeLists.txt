@@ -10,7 +10,7 @@ include_directories(Headers)
 
 # Add source files
 set(SOURCES
-    src/Main.c
+    src/Main/Main.c
     src/ALU/ALU.c
     src/DataMemory/DataMemory.c
     src/InstructionMemory/InstructionMemory.c
