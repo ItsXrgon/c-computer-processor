@@ -38,17 +38,20 @@ void LoadProgram(char* file_name){
         case 0:
         case 1:
         case 2:
-        case 5:
         case 6:
+        case 7:
             instruction.value2 = operand2[1] - '0';
+            instruction.type = 'R';
             break;
         case 3:
         case 4:
-        case 7:
+        case 5:
         case 8:
         case 9:
         case 10:
+        case 11:
             instruction.value2 = atoi(operand2);
+            instruction.type = 'I';
             break;
         }
         WriteInstructionMemory(address, instruction);
@@ -66,7 +69,7 @@ void ResetProcessor(){
 
 int main() {
     ResetProcessor();
-    LoadProgram("/home/youssef/Documents/Guc/CA/project/c-computer-processor/src/Test/test2.txt");
+    LoadProgram("/home/youssef/Documents/Guc/CA/project/c-computer-processor/src/Test/assembly.txt");
     // Initialize pipeline stages
     PipelineStage IF = { .valid = 0 };
     PipelineStage ID = { .valid = 0 };

@@ -90,7 +90,12 @@ void fetchPipeline() {
         pipeline1.valid = 1;
         pipeline1.pcVal = GetPC();
 
-        printf("Fetched Instruction: %d %d %d %c\n", instruction.opcode, instruction.operand1, instruction.value2, instruction.type);
+        printf("Fetched Instruction %d: Opcode:%d  Register:%d Reg/IMM:%d Type:%c\n",
+         pipeline1.pcVal,
+         instruction.opcode, 
+         instruction.operand1, 
+         instruction.value2, 
+         instruction.type);
         IncrementPC();
     }
  }
@@ -101,7 +106,12 @@ void decodePipeline() {
             pipeline3.pcVal = pipeline2.pcVal;
             pipeline3.valid = true;
             pipeline2.valid = false;
-            printf("Decoded Instruction: %d %d %d %c\n", pipeline2.instruction.opcode, pipeline2.instruction.operand1, pipeline2.instruction.value2, pipeline2.instruction.type);
+            printf("Decoded Instruction %d : Opcode:%d  Register:%d Reg/IMM:%d Type:%c\n", 
+            pipeline2.pcVal,
+            pipeline2.instruction.opcode, 
+            pipeline2.instruction.operand1, 
+            pipeline2.instruction.value2,
+            pipeline2.instruction.type);
         }
     else {
             printf("No instruction to be decoded \n");
@@ -116,7 +126,12 @@ void decodePipeline() {
 void excutePipeline(){
     if (pipeline4.valid)
     {
-        printf("Instruction executed %d %d %d %c\n", pipeline4.instruction.opcode, pipeline4.instruction.operand1, pipeline4.instruction.value2, pipeline4.instruction.type);
+        printf("executed Instrcution %d: Opcode:%d  Register:%d Reg/IMM:%d Type:%c\n", 
+        pipeline4.pcVal,
+        pipeline4.instruction.opcode, 
+        pipeline4.instruction.operand1, 
+        pipeline4.instruction.value2, 
+        pipeline4.instruction.type);
         execute(pipeline4.instruction);
         pipeline4.valid = false;
     }
@@ -196,7 +211,12 @@ void PrintAllInstructionMemory(){
     {
         if (instruction_memory[i].opcode != 0)
         {
-            printf("%d: %d %d %d %c\n", i, instruction_memory[i].opcode, instruction_memory[i].operand1, instruction_memory[i].value2, instruction_memory[i].type);
+            printf("Instruction %d : Opcode:%d Register: %d  Reg2/IMM: %d Type:%c\n", 
+            i, 
+            instruction_memory[i].opcode, 
+            instruction_memory[i].operand1, 
+            instruction_memory[i].value2, 
+            instruction_memory[i].type);
         }
     }
     

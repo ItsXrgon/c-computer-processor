@@ -71,7 +71,7 @@ void EOR(int R1,int R2)
 
 void BR(int R1,int R2)
 {
-SetPC((ReadRegister(R1) << 16) | ReadRegister(R2));
+SetPC((ReadRegister(R1) << 16) | ReadRegister(R2) -1);
 }
 
 void SAL(int R1,int R2)
@@ -96,11 +96,11 @@ void SAR(int R1,int R2)
 
 void LDR(int R1,int R2)
 {
-   WriteRegister(R1, ReadDataMemory(ReadRegister(R2)));
+   WriteRegister(R1, ReadDataMemory(R2));
 }
 
 void STR(int R1,int R2)
 {
-   WriteDataMemory(ReadRegister(R2), ReadRegister(R1));
+   WriteDataMemory(R2, ReadRegister(R1));
 }
 

@@ -15,7 +15,7 @@ void PrintAllDataMemory(){
     for (int i = 0; i < 2048; i++)
     {   
         if (data_memory[i] != 0){
-        printf("DataMemory Address:%d DataMemory Data: %d\n", i, data_memory[i]);
+        printf("Address:%d DataMemory Data: %d\n", i, data_memory[i]);
         }
     }
 }
