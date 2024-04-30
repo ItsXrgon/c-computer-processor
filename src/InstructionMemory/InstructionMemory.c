@@ -26,19 +26,19 @@ short incodeOpcode(char *opcode){
     {
         return 2;
     }
-    else if (strcmp(opcode, "MOV") == 0)
+    else if (strcmp(opcode, "MOVI") == 0)
     {
         return 3;
     }
-    else if (strcmp(opcode, "BEQ") == 0)
+    else if (strcmp(opcode, "BEQZ") == 0)
     {
         return 4;
     }
-    else if (strcmp(opcode, "AND") == 0)
+    else if (strcmp(opcode, "ANDI") == 0)
     {
         return 5;
     }
-    else if (strcmp(opcode, "XOR") == 0)
+    else if (strcmp(opcode, "EOR") == 0)
     {
         return 6;
     }
@@ -54,11 +54,11 @@ short incodeOpcode(char *opcode){
     {
         return 9;
     }
-    else if (strcmp(opcode, "LD") == 0)
+    else if (strcmp(opcode, "LDR") == 0)
     {
         return 10;
     }
-    else if (strcmp(opcode, "ST") == 0)
+    else if (strcmp(opcode, "STR") == 0)
     {
         return 11;
     }

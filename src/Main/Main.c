@@ -32,7 +32,7 @@ void LoadProgram(char* file_name){
         char operand2[3];
         fscanf(file, "%s %s %s", opcode, operand1, operand2);
         instruction.opcode = incodeOpcode(opcode);
-        instruction.operand1 = operand1[1];
+        instruction.operand1 = operand1[1] - '0';
         switch (instruction.opcode)
         {
         case 0:
@@ -80,9 +80,9 @@ int main() {
     printf("Executing Clock Cycles:\n");
     Instruction instruction = ReadInstructionMemory(GetPC());
     while (
-        (&instruction != NULL)
+        ((&instruction != NULL)
      || (pipeline2.valid == true) 
-     || (pipeline4.valid == true) && (clockcycles < MaxClockCycles)) {
+     || (pipeline4.valid == true)) && (clockcycles < MaxClockCycles)) {
 
             printf("Cycle: %i \n", clockcycles);
 
