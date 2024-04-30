@@ -1,16 +1,19 @@
 #include "../Headers/Registers.h"
-struct Instruction{
-    int opcode;
-    int operand1;
-    int value2;//operand2 or immediate value or address
-    char type;
-};
-typedef struct Instruction Instruction;
+#include "../Headers/Structs.h"
+#include "../Headers/ALU.h"
+#include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 
 Instruction instruction_memory [1024];
+PipelineStage pipeline1;
+PipelineStage pipeline2;
+PipelineStage pipeline3;
+PipelineStage pipeline4;
 
-
-int incodeOpcode(char *opcode){
+short incodeOpcode(char *opcode){
     if (strcmp(opcode, "ADD") == 0)
     {
         return 0;
@@ -73,61 +76,108 @@ Instruction ReadInstructionMemory(int address){
     return instruction_memory[address];
 }
 
-Instruction fetch(){
+void fetchPipeline() {
     Instruction instruction = ReadInstructionMemory(GetPC());
-    IncrementPC();
-    return instruction;
-}
-
-void decode(Instruction instruction) {
-    int opcode = instruction.opcode;
-    int operand1 = instruction.operand1;
-    int operand2 = instruction.value2;
-    excute(opcode, operand1, operand2);
-}
-
-void excute(int opcode, int operand1, int operand2){
-    switch (opcode)
+    if ( &instruction == NULL)
     {
-    case 0: // ADD
-        ALU(ReadRegister(operand1), ReadRegister(operand2), 0);
+        printf("No more Instructions\n");
+        pipeline1.valid = 0;
+        return;
+    }
+    else{
+
+        pipeline1.instruction = instruction;
+        pipeline1.valid = 1;
+        pipeline1.pcVal = GetPC();
+
+        printf("Fetched Instruction: %d %d %d %c\n", instruction.opcode, instruction.operand1, instruction.value2, instruction.type);
+        IncrementPC();
+    }
+ }
+
+void decodePipeline() {
+   if(pipeline2.valid) {
+            pipeline3.instruction = pipeline2.instruction;
+            pipeline3.pcVal = pipeline2.pcVal;
+            pipeline3.valid = true;
+            pipeline2.valid = false;
+            printf("Decoded Instruction: %d %d %d %c\n", pipeline2.instruction.opcode, pipeline2.instruction.operand1, pipeline2.instruction.value2, pipeline2.instruction.type);
+        }
+    else {
+            printf("No instruction to be decoded \n");
+        }
+    if(pipeline1.valid){
+            pipeline2.instruction = pipeline1.instruction;
+            pipeline2.pcVal = pipeline1.pcVal;
+            pipeline2.valid = true;
+        }
+}
+
+void excutePipeline(){
+    if (pipeline4.valid)
+    {
+        printf("Instruction executed %d %d %d %c\n", pipeline4.instruction.opcode, pipeline4.instruction.operand1, pipeline4.instruction.value2, pipeline4.instruction.type);
+        execute(pipeline4.instruction);
+        pipeline4.valid = false;
+    }
+    else {
+        printf("No instruction to be executed\n");
+    }
+    if (pipeline3.valid)
+    {
+        pipeline4.instruction = pipeline3.instruction;
+        pipeline4.pcVal = pipeline3.pcVal;
+        pipeline4.valid = true;
+        pipeline3.valid = false;
+    }
+    else {
+        pipeline4.valid = false;
+    }
+}
+
+void execute(Instruction ins){
+    switch (ins.opcode)
+    {
+    case 0:
+        ADD(ins.operand1, ins.value2);
         break;
-    case 1: // SUB
-        ALU(ReadRegister(operand1), ReadRegister(operand2), 1);
+    case 1:
+        SUB(ins.operand1, ins.value2);
         break;
-    case 2: // MUL
-        ALU(ReadRegister(operand1), ReadRegister(operand2), 2);
+    case 2: 
+        MUL(ins.operand1, ins.value2);
         break;
-    case 3: // Move immediate
-        ALU(operand1, operand2, 3);
+    case 3:
+        MOVI(ins.operand1, ins.value2);
         break;
-    case 4: // Branch if equal zero
-        ALU(operand1, operand2, 4);
+    case 4:
+        BEQZ(ins.operand1, ins.value2);
         break;
-    case 5: // AND Immediate
-        ALU(ReadRegister(operand1), operand2, 5);
+    case 5:
+        ANDI(ins.operand1, ins.value2);
         break;
-    case 6: // Exclusive OR
-        ALU(ReadRegister(operand1), operand2, 6);
+    case 6:
+        EOR(ins.operand1, ins.value2);
         break;
-    case 7: // Branch Register
-        ALU(ReadRegister(operand1), ReadRegister(operand2), 7);
+    case 7:
+        BR(ins.operand1, ins.value2);
         break;
-    case 8: // Shift Arithmetic Left
-        ALU(ReadRegister(operand1), operand2, 8);
+    case 8:
+        SAL(ins.operand1, ins.value2);
         break;
-    case 9: // Shift Arithmetic Right
-        ALU(ReadRegister(operand1), operand2, 9);
+    case 9:
+        SAR(ins.operand1, ins.value2);
         break;
-    case 10: // Load to Register
-        ALU(operand1, operand2, 10);
+    case 10:
+        LDR(ins.operand1, ins.value2);
         break;
-    case 11: // Store from Register
-        ALU(operand1, operand2, 11);
+    case 11:
+        STR(ins.operand1, ins.value2);
         break;
     default:
         break;
     }
+
 }
 
 

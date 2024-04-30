@@ -13,6 +13,7 @@ int ReadRegister(int reg)
 void WriteRegister(int address, int value)
 {
     generalRegisters[address] = value;
+    printf("Updated: R%d: %d\n", address, value);
 }
 void IncrementPC()
 {
@@ -30,6 +31,7 @@ int GetPC()
 }
 void updateCarryFlag(int operand1, int operand2, int result)
 {
+    int prev = SREG[0];
     if (result < operand1 || result < operand2)
     {
         SREG[0] = 1;
@@ -38,10 +40,15 @@ void updateCarryFlag(int operand1, int operand2, int result)
     {
         SREG[0] = 0;
     }
+    if (prev != SREG[0])
+    {
+        printf("Carry Flag Updated: %d\n", SREG[0]);
+    }
 }
 
 void updateOverflowFlag(int operand1, int operand2, int result)
 {
+    int prev = SREG[1];
     if (operand1 > 0 && operand2 > 0 && result < 0)
     {
         SREG[1] = 1;
@@ -54,10 +61,15 @@ void updateOverflowFlag(int operand1, int operand2, int result)
     {
         SREG[1] = 0;
     }
+    if (prev != SREG[1])
+    {
+        printf("Overflow Flag Updated: %d\n", SREG[1]);
+    }
 }
 
 void updateNegativeFlag(int result)
 {
+    int prev = SREG[2];
     if (result < 0)
     {
         SREG[2] = 1;
@@ -66,10 +78,15 @@ void updateNegativeFlag(int result)
     {
         SREG[2] = 0;
     }
+    if (prev != SREG[2])
+    {
+        printf("Negative Flag Updated: %d\n", SREG[2]);
+    }
 }
 
 void updateSignFlag(int result)
 {
+    int prev = SREG[3];
     if (result == 0)
     {
         SREG[3] = 1;
@@ -78,10 +95,15 @@ void updateSignFlag(int result)
     {
         SREG[3] = 0;
     }
+    if (prev != SREG[3])
+    {
+        printf("Sign Flag Updated: %d\n", SREG[3]);
+    }
 }
 
 void updateZeroFlag(int result)
 {
+    int prev = SREG[4];
     if (result == 0)
     {
         SREG[4] = 1;
@@ -89,6 +111,10 @@ void updateZeroFlag(int result)
     else
     {
         SREG[4] = 0;
+    }
+    if (prev != SREG[4])
+    {
+        printf("Zero Flag Updated: %d\n", SREG[4]);
     }
 }
 void ResetRegisters()
@@ -123,13 +149,8 @@ void PrintAllRegisters()
     for (int i = 0; i < 64; i++)
     {
         if(generalRegisters[i] != 0){
-        printf("R%d: %d\n", i, generalRegisters[i]);
+        printf("Register %d: %d\n", i, generalRegisters[i]);
         }
     }
-    printf("Special Registers:\n");
-    printf("C: %d\n", SREG[0]);
-    printf("V: %d\n", SREG[1]);
-    printf("N: %d\n", SREG[2]);
-    printf("S: %d\n", SREG[3]);
-    printf("Z: %d\n", SREG[4]);
+    PrintStatusRegister();
 }

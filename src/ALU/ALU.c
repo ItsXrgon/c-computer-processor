@@ -1,68 +1,106 @@
 #include "../Headers/Registers.h"
 #include "../Headers/DataMemory.h"
 
-int ALU(int operand1, int operand2, int operation){
-    int result;
-    switch (operation)
+void ADD(int R1,int R2)
+{
+    int result = ReadRegister(R1) + ReadRegister(R2);
+    int r1 = ReadRegister(R1);
+    int r2 = ReadRegister(R2);
+    updateCarryFlag(r1, r2 ,result);
+    updateNegativeFlag(result);
+    updateSignFlag(result);
+    updateZeroFlag(result);
+    updateOverflowFlag(r1, r2, result);
+    WriteRegister(R1, result);
+   
+}
+
+void SUB(int R1,int R2)
+{
+    int result = ReadRegister(R1) - ReadRegister(R2);
+    int r1 = ReadRegister(R1);
+    int r2 = ReadRegister(R2);
+    updateNegativeFlag(result);
+    updateSignFlag(result);
+    updateZeroFlag(result);
+    updateOverflowFlag(r1, r2, result);
+    WriteRegister(R1, result);
+}
+
+void MUL(int R1,int R2)
+{
+    int result = ReadRegister(R1) * ReadRegister(R2);
+    int r1 = ReadRegister(R1);
+    int r2 = ReadRegister(R2);
+
+    updateNegativeFlag(result);
+    updateZeroFlag(result);
+    WriteRegister(R1, result);
+}
+
+void MOVI(int R1,int R2)
+{
+   WriteRegister(R1, R2);
+}
+
+void BEQZ(int R1,int R2)
+{
+    if(ReadRegister(R1) == 0)
     {
-    case 0: // ADD
-        result = operand1 + operand2;
-        updateCarryFlag(operand1, operand2, result);
-        updateOverflowFlag(operand1, operand2, result);
-        updateNegativeFlag(result);
-        updateSignFlag(result);
-        updateZeroFlag(result);
-        return result;
-    case 1: // SUB
-        result = operand1 - operand2;
-        updateOverflowFlag(operand1, operand2, result);
-        updateNegativeFlag(result);
-        updateSignFlag(result);
-        updateZeroFlag(result);
-        return result;
-    case 2: // MUL
-        result = operand1 * operand2;
-        updateNegativeFlag(result);
-        updateZeroFlag(result);
-        return result;
-    case 3: // Move immediate
-        WriteRegister(operand1, operand2);
-        return 0;
-    case 4: // Branch if equal zero
-        if (operand1 == 0)
-        {
-            SetPC(operand2);
-        }
-        return 0;
-    case 5: // AND Immediate
-        result = operand1 & operand2;
-        updateNegativeFlag(result);
-        updateZeroFlag(result);
-        return result;
-    case 6: // Exclusive OR
-        result = operand1 ^ operand2;
-        updateNegativeFlag(result);
-        updateZeroFlag(result);
-    case 7: // Branch Register
-        SetPC(operand1 || operand2);
-        return 0;
-    case 8: // Shift Arithmetic Left
-        result = operand1 << operand2;
-        updateNegativeFlag(result);
-        updateZeroFlag(result);
-        return result;
-    case 9: // Shift Arithmetic Right
-        result = operand1 >> operand2;
-        updateNegativeFlag(result);
-        updateZeroFlag(result);
-        return result;
-    case 10: // Load to Register
-        WriteRegister(operand1, ReadDataMemory(operand2));
-        return 0;
-    case 11: // Store from Register
-        WriteDataMemory(operand1, ReadRegister(operand2));
-        return operand1;
-    default:
-        return 0;
+        SetPC(GetPC() + R2);
     }
 }
+
+void ANDI(int R1,int R2)
+{
+    updateNegativeFlag(ReadRegister(R1) & R2);
+    updateZeroFlag(ReadRegister(R1) & R2);
+    WriteRegister(R1, ReadRegister(R1) & R2);
+}
+
+
+void EOR(int R1,int R2)
+{
+    int result = ReadRegister(R1) ^ ReadRegister(R2);
+    int r1 = ReadRegister(R1);
+    int r2 = ReadRegister(R2);
+    updateNegativeFlag(result);
+    updateZeroFlag(result);
+    WriteRegister(R1, result);
+}
+
+void BR(int R1,int R2)
+{
+SetPC((ReadRegister(R1) << 16) | ReadRegister(R2));
+}
+
+void SAL(int R1,int R2)
+{ 
+    int result = ReadRegister(R1) << ReadRegister(R2);
+    int r1 = ReadRegister(R1);
+    int r2 = ReadRegister(R2);
+    updateNegativeFlag(result);
+    updateZeroFlag(result);
+    WriteRegister(R1, result);
+}
+
+void SAR(int R1,int R2)
+{
+    int result = ReadRegister(R1) >> ReadRegister(R2);
+    int r1 = ReadRegister(R1);
+    int r2 = ReadRegister(R2);
+    updateNegativeFlag(result);
+    updateZeroFlag(result);
+    WriteRegister(R1, result);
+}
+
+void LDR(int R1,int R2)
+{
+   WriteRegister(R1, ReadDataMemory(ReadRegister(R2)));
+}
+
+void STR(int R1,int R2)
+{
+   WriteDataMemory(ReadRegister(R2), ReadRegister(R1));
+}
+

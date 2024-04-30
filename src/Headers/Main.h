@@ -11,7 +11,7 @@
 //Main
 void LoadProgram(const char *file_name);
 void ResetProcessor();
-void PrintStatus();
+
 
 
 //Registers

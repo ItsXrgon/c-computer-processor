@@ -93,6 +93,7 @@ You are required to understand the pattern in the example and implement it.
 
   - Carry Flag (C):
     -Check on 9th bit (bit 8) of UNSIGNED[VALUE1] OP UNSIGNED[VALUE2] == 1 or not
+  - Updated every ADD
 
   - Overflow flag (V):
 
