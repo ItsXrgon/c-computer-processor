@@ -1,34 +1,65 @@
+/**
+ * @file Registers.c
+ * @brief Implementation of register-related functions.
+ */
 
-int generalRegisters[64];
-int SREG[8]; // SREG[0] = C, SREG[1] = V, SREG[2] = N, SREG[3] = S, SREG[4] = Z
-int pc = 0;
+int generalRegisters[64]; // Array to store general purpose registers
+int SREG[8]; // Array to store status register flags: C, V, N, S, Z
+int pc = 0; // Program counter
 
-
-
+/**
+ * @brief Reads the value of a register.
+ * @param reg The register number.
+ * @return The value of the register.
+ */
 int ReadRegister(int reg)
 {
     return generalRegisters[reg];
 }
 
+/**
+ * @brief Writes a value to a register.
+ * @param address The register number.
+ * @param value The value to be written.
+ */
 void WriteRegister(int address, int value)
 {
     generalRegisters[address] = value;
     printf("Updated: R%d: %d\n", address, value);
 }
+
+/**
+ * @brief Increments the program counter by 1.
+ */
 void IncrementPC()
 {
     pc++;
 }
 
+/**
+ * @brief Sets the value of the program counter.
+ * @param value The value to be set.
+ */
 void SetPC(int value)
 {
     pc = value;
 }
 
+/**
+ * @brief Gets the value of the program counter.
+ * @return The value of the program counter.
+ */
 int GetPC()
 {
     return pc;
 }
+
+/**
+ * @brief Updates the carry flag based on the result of an operation.
+ * @param operand1 The first operand.
+ * @param operand2 The second operand.
+ * @param result The result of the operation.
+ */
 void updateCarryFlag(int operand1, int operand2, int result)
 {
     int prev = SREG[0];
@@ -46,6 +77,12 @@ void updateCarryFlag(int operand1, int operand2, int result)
     }
 }
 
+/**
+ * @brief Updates the overflow flag based on the result of an operation.
+ * @param operand1 The first operand.
+ * @param operand2 The second operand.
+ * @param result The result of the operation.
+ */
 void updateOverflowFlag(int operand1, int operand2, int result)
 {
     int prev = SREG[1];
@@ -61,12 +98,17 @@ void updateOverflowFlag(int operand1, int operand2, int result)
     {
         SREG[1] = 0;
     }
+    // print the flag if it got updated
     if (prev != SREG[1])
     {
         printf("Overflow Flag Updated: %d\n", SREG[1]);
     }
 }
 
+/**
+ * @brief Updates the negative flag based on the result of an operation.
+ * @param result The result of the operation.
+ */
 void updateNegativeFlag(int result)
 {
     int prev = SREG[2];
@@ -84,6 +126,10 @@ void updateNegativeFlag(int result)
     }
 }
 
+/**
+ * @brief Updates the sign flag based on the result of an operation.
+ * @param result The result of the operation.
+ */
 void updateSignFlag(int result)
 {
     int prev = SREG[3];
@@ -101,6 +147,10 @@ void updateSignFlag(int result)
     }
 }
 
+/**
+ * @brief Updates the zero flag based on the result of an operation.
+ * @param result The result of the operation.
+ */
 void updateZeroFlag(int result)
 {
     int prev = SREG[4];
@@ -117,6 +167,10 @@ void updateZeroFlag(int result)
         printf("Zero Flag Updated: %d\n", SREG[4]);
     }
 }
+
+/**
+ * @brief Resets all registers and the program counter to zero.
+ */
 void ResetRegisters()
 {
     for (int i = 0; i < 64; i++)
@@ -130,8 +184,11 @@ void ResetRegisters()
     pc = 0;
 }
 
-
-void PrintStatusRegister(){
+/**
+ * @brief Prints the status register flags.
+ */
+void PrintStatusRegister()
+{
     printf("Status Register:\n");
     printf("C: %d\n", SREG[0]);
     printf("V: %d\n", SREG[1]);
@@ -143,6 +200,9 @@ void PrintStatusRegister(){
     printf("8: %d\n", SREG[7]);
 }
 
+/**
+ * @brief Prints the values of all non-zero registers.
+ */
 void PrintAllRegisters()
 {
     printf("General Registers:\n");

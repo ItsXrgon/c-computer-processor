@@ -1,5 +1,22 @@
 # c-computer-processor
 
+# How to run the Project
+
+- Download cmake:
+
+  1. `sudo apt update`
+  1. `sudo apt install cmake`
+
+- Running:
+
+  1. `cd C-Computer-Processor`
+  1. `cmake -B build`
+     1. -B has to be capital this is the build command
+     1. build: this is the directory (output) of the build command
+  1. `cd build`
+  1. `make`
+  1. `./c-computer-processor`
+
 # Double Big Harvard combo large arithmetic shifts
 
 ## Program Flow
