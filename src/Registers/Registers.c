@@ -4,8 +4,8 @@
  */
 
 int generalRegisters[64]; // Array to store general purpose registers
-int SREG[8]; // Array to store status register flags: C, V, N, S, Z
-int pc = 0; // Program counter
+int SREG[8];              // Array to store status register flags: C, V, N, S, Z
+int pc = 0;               // Program counter
 
 /**
  * @brief Reads the value of a register.
@@ -208,8 +208,9 @@ void PrintAllRegisters()
     printf("General Registers:\n");
     for (int i = 0; i < 64; i++)
     {
-        if(generalRegisters[i] != 0){
-        printf("Register %d: %d\n", i, generalRegisters[i]);
+        if (generalRegisters[i] != 0)
+        {
+            printf("Register %d: %d\n", i, generalRegisters[i]);
         }
     }
     PrintStatusRegister();
