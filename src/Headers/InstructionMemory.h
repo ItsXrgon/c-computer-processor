@@ -11,12 +11,20 @@
 
 
 /**
+ * @brief Resets the pipeline.
+ *
+ * This function is responsible for resetting the pipeline in the computer processor.
+ * It clears any stored instructions and prepares the pipeline for the execution of new instructions.
+ */
+void ResetPipeline();
+
+/**
  * @brief Converts the opcode string to its corresponding integer value.
  * 
  * @param opcode The opcode string to be converted.
  * @return The integer value of the opcode.
  */
-int incodeOpcode(char *opcode);
+int incodeOpcode(char* opcode);
 
 /**
  * @brief Writes an instruction to the instruction memory at the specified address.

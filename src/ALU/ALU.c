@@ -80,6 +80,7 @@ void BEQZ(int R1, int IMM)
     if (ReadRegister(R1) == 0)
     {
         SetPC(GetPC() + IMM - 1);
+        ResetPipeline();
     }
 }
 
@@ -123,6 +124,7 @@ void EOR(int R1, int R2)
 void BR(int R1, int R2)
 {
     SetPC((ReadRegister(R1) << 16) | ReadRegister(R2) - 1);
+    ResetPipeline();
 }
 
 /**

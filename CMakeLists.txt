@@ -1,8 +1,9 @@
 cmake_minimum_required(VERSION 3.12)
-project(c-computer-processor VERSION 1.0.0 LANGUAGES C)
+project(processor)
 
-# Set C standard
+# Enable C11
 set(CMAKE_C_STANDARD 11)
+set(CMAKE_C_STANDARD_REQUIRED True)
 
 # Assuming your header files are in a folder named "headers"
 include_directories(Headers)
@@ -19,9 +20,9 @@ set(SOURCES
 )
 
 # Add executable target
-add_executable(c-computer-processor  ${SOURCES})
+add_executable(processor  ${SOURCES})
 
 # Add include directories
-target_include_directories(c-computer-processor PUBLIC include)
+target_include_directories(processor PUBLIC include)
 
 

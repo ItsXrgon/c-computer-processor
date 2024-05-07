@@ -4,6 +4,7 @@
  */
 
 #include "../Headers/InstructionMemory.h"
+
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -121,6 +122,7 @@ int main() {
     LoadProgram("/home/youssef/Documents/Guc/CA/project/c-computer-processor/src/Test/assembly.txt");
 
     Instruction instruction = ReadInstructionMemory(GetPC());
+
     /**
      * This function represents the main loop of the processor. It executes the pipeline stages
      * (fetch, decode, execute) until certain conditions are met.
@@ -135,7 +137,14 @@ int main() {
      * After each iteration, the clock cycle is incremented, and a separator line is printed.
      * Finally, the instruction pointer is updated by reading the instruction memory at the current program counter (PC).
      */
-    while (((&instruction != NULL) || (pipeline2.valid == true) || (pipeline4.valid == true)) && (clockcycles < MaxClockCycles)) {
+    while (
+        (
+            (instruction.opcode != -1) 
+            || (pipeline2.valid == true) 
+            || (pipeline4.valid == true)
+            )
+             && (clockcycles < MaxClockCycles)
+             ) {
         printf("Cycle: %i \n", clockcycles);
 
         fetchPipeline();

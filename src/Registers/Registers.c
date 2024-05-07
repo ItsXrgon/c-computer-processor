@@ -43,6 +43,7 @@ void IncrementPC()
 void SetPC(int value)
 {
     pc = value;
+    printf("Updated: PC: %d\n", value);
 }
 
 /**

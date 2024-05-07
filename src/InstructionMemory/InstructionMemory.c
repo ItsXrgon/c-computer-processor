@@ -8,10 +8,40 @@
 
 // Global variables
 Instruction instruction_memory[1024];
-PipelineStage pipeline1; // first stage fetch to decode
-PipelineStage pipeline2; // second stage
-PipelineStage pipeline3;
-PipelineStage pipeline4;
+PipelineStage pipeline1; // Saving the fetched instruction to hand over to decode stage next CC
+PipelineStage pipeline2; // holds the instruction to be decoded
+PipelineStage pipeline3; // Saving the decoded instruction to hand over to excute stage next CC
+PipelineStage pipeline4; // holds the instruction to be executed
+
+
+// Function to reset the pipeline stages
+void ResetPipeline() {
+    pipeline1.valid = false;
+    pipeline2.valid = false;
+    pipeline3.valid = false;
+    pipeline4.valid = false;
+    pipeline1.pcVal = 0;
+    pipeline2.pcVal = 0;
+    pipeline3.pcVal = 0;
+    pipeline4.pcVal = 0;
+    pipeline1.instruction.opcode = -1;
+    pipeline2.instruction.opcode = -1;
+    pipeline3.instruction.opcode = -1;
+    pipeline4.instruction.opcode = -1;
+    pipeline1.instruction.operand1 = 0;
+    pipeline2.instruction.operand1 = 0;
+    pipeline3.instruction.operand1 = 0;
+    pipeline4.instruction.operand1 = 0;
+    pipeline1.instruction.value2 = 0;
+    pipeline2.instruction.value2 = 0;
+    pipeline3.instruction.value2 = 0;
+    pipeline4.instruction.value2 = 0;
+    pipeline1.instruction.type = 'R';
+    pipeline2.instruction.type = 'R';
+    pipeline3.instruction.type = 'R';
+    pipeline4.instruction.type = 'R';
+    
+}
 
 // Function to convert opcode string to corresponding opcode value
 short incodeOpcode(char *opcode) {
@@ -57,7 +87,7 @@ Instruction ReadInstructionMemory(int address) {
 // Function to fetch an instruction from the instruction memory and update the fetch pipeline stage
 void fetchPipeline() {
     Instruction instruction = ReadInstructionMemory(GetPC());
-    if (&instruction == NULL) {
+    if (instruction.opcode == -1) {
         printf("No more Instructions\n");
         pipeline1.valid = false;
         return;
