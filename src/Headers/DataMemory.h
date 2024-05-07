@@ -3,7 +3,7 @@
 
 /* ^^ these are the include guards */
 
-/* 
+/*
  * Function: ReadDataMemory
  * ------------------------
  * Reads the value stored in the data memory at the specified address.
@@ -14,7 +14,7 @@
  */
 int ReadDataMemory(int address);
 
-/* 
+/*
  * Function: WriteDataMemory
  * -------------------------
  * Writes the specified value to the data memory at the specified address.
@@ -26,7 +26,7 @@ int ReadDataMemory(int address);
  */
 void WriteDataMemory(int address, int value);
 
-/* 
+/*
  * Function: PrintAllDataMemory
  * ----------------------------
  * Prints the contents of the data memory.
@@ -35,7 +35,7 @@ void WriteDataMemory(int address, int value);
  */
 void PrintAllDataMemory();
 
-/* 
+/*
  * Function: ResetDataMemory
  * -------------------------
  * Resets the data memory by clearing all its contents.

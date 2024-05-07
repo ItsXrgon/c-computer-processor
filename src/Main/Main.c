@@ -10,26 +10,26 @@
 #include <stdlib.h>
 #include <string.h>
 
-int MaxClockCycles ; // Global variable in main.c gets init in load program function after the while loop 
-int clockcycles = 1; // global var to track the current clock cycle for the program
+int MaxClockCycles;                          // Global variable in main.c gets init in load program function after the while loop
+int clockcycles = 1;                         // global var to track the current clock cycle for the program
 extern Instruction instruction_memory[1024]; /**< External array representing the instruction memory. */
-extern PipelineStage pipeline1; /**< External variable representing the first pipeline stage. */
-extern PipelineStage pipeline2; /**< External variable representing the second pipeline stage. */
-extern PipelineStage pipeline3; /**< External variable representing the third pipeline stage. */
-extern PipelineStage pipeline4; /**< External variable representing the fourth pipeline stage. */
-extern unsigned short DataMemory[1024]; /**< External array representing the data memory. */
-extern int Registers[64]; /**< External array representing the registers. */
-extern int SREG[8]; /**< External array representing the status register. SREG[0] = C, SREG[1] = V, SREG[2] = N, SREG[3] = S, SREG[4] = Z */
-extern int pc; /**< External variable representing the program counter. */
-
+extern PipelineStage pipeline1;              /**< External variable representing the first pipeline stage. */
+extern PipelineStage pipeline2;              /**< External variable representing the second pipeline stage. */
+extern PipelineStage pipeline3;              /**< External variable representing the third pipeline stage. */
+extern PipelineStage pipeline4;              /**< External variable representing the fourth pipeline stage. */
+extern unsigned short DataMemory[1024];      /**< External array representing the data memory. */
+extern int Registers[64];                    /**< External array representing the registers. */
+extern int SREG[8];                          /**< External array representing the status register. SREG[0] = C, SREG[1] = V, SREG[2] = N, SREG[3] = S, SREG[4] = Z */
+extern int pc;                               /**< External variable representing the program counter. */
 
 /**
  * @brief Loads the program from the given file into the instruction memory.
- * 
+ *
  * @param file_name The name of the assembly file to load.
  */
-void LoadProgram(char* file_name){
-    FILE* file = fopen(file_name, "r");
+void LoadProgram(char *file_name)
+{
+    FILE *file = fopen(file_name, "r");
     if (file == NULL)
     {
         printf("Error: Assembly file not found\n");
@@ -61,51 +61,52 @@ void LoadProgram(char* file_name){
          * @return The number of items successfully read and assigned, or EOF if an error occurred.
          */
         fscanf(file, "%s %s %s", opcode, operand1, operand2);
-        instruction.opcode = incodeOpcode(opcode);// incodes the opcode string to int
-        instruction.operand1 = operand1[1] - '0'; 
+        instruction.opcode = incodeOpcode(opcode); // incodes the opcode string to int
+        instruction.operand1 = operand1[1] - '0';
         /**
          * This switch statement assigns values to the `instruction.value2` and `instruction.type` variables based on the `instruction.opcode`.
-         * 
+         *
          * For cases where the instruction is of type R, the second input is a register address and is assigned to `instruction.value2`.
          * For cases where the instruction is of type I, the second input is an immediate value and is converted to an integer using `atoi()` and assigned to `instruction.value2`.
-         * 
+         *
          * @param instruction The instruction struct containing the opcode, value2, and type.
          * @param operand2 The second operand of the instruction.
          */
         switch (instruction.opcode)
         {
-            // Cases that the Instruction is of Type R, therefore the second input is a Register address
-            case 0:
-            case 1:
-            case 2:
-            case 6:
-            case 7:
-                instruction.value2 = operand2[1] - '0';
-                instruction.type = 'R';
-                break;
-            // Cases that the Instruction is of Type I, therefore the second input is an IMM Value
-            case 3:
-            case 4:
-            case 5:
-            case 8:
-            case 9:
-            case 10:
-            case 11:
-                instruction.value2 = atoi(operand2);
-                instruction.type = 'I';
-                break;
+        // Cases that the Instruction is of Type R, therefore the second input is a Register address
+        case 0:
+        case 1:
+        case 2:
+        case 6:
+        case 7:
+            instruction.value2 = operand2[1] - '0';
+            instruction.type = 'R';
+            break;
+        // Cases that the Instruction is of Type I, therefore the second input is an IMM Value
+        case 3:
+        case 4:
+        case 5:
+        case 8:
+        case 9:
+        case 10:
+        case 11:
+            instruction.value2 = atoi(operand2);
+            instruction.type = 'I';
+            break;
         }
         WriteInstructionMemory(address, instruction);
         address++;
     }
-    MaxClockCycles = address +3;
+    MaxClockCycles = address + 3;
     fclose(file);
 }
 
 /**
  * @brief Resets the processor by resetting the data memory, instruction memory, and registers.
  */
-void ResetProcessor(){
+void ResetProcessor()
+{
     ResetDataMemory();
     ResetInstructionMemory();
     ResetRegisters();
@@ -113,12 +114,13 @@ void ResetProcessor(){
 
 /**
  * @brief The main function that simulates the computer processor.
- * 
+ *
  * @return 0 indicating successful execution.
  */
-int main() {
+int main()
+{
     ResetProcessor();
-    //Only works with absolute path of the txt file
+    // Only works with absolute path of the txt file
     LoadProgram("/home/youssef/Documents/Guc/CA/project/c-computer-processor/src/Test/assembly.txt");
 
     Instruction instruction = ReadInstructionMemory(GetPC());
@@ -158,15 +160,14 @@ int main() {
 
         instruction = ReadInstructionMemory(GetPC());
     }
-    
-    
+
     /**
      * Prints the final state of registers and memory.
      * Calls the functions to print the final state of registers, data memory, and instruction memory.
      */
     printf("Final State of Registers:\n");
 
-    PrintAllRegisters(); 
+    PrintAllRegisters();
 
     printf("Final State of Data Memory: \n");
 
@@ -174,7 +175,7 @@ int main() {
 
     printf("Final State of Instruction Memory: \n");
 
-    PrintAllInstructionMemory(); 
+    PrintAllInstructionMemory();
 
     return 0;
 }

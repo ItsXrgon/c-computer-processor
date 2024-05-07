@@ -6,7 +6,8 @@
  */
 unsigned short data_memory[2048];
 
-int ReadDataMemory(int address){
+int ReadDataMemory(int address)
+{
     return data_memory[address];
 }
 
@@ -16,7 +17,8 @@ int ReadDataMemory(int address){
  * @param address The memory address to write to.
  * @param value The data to be written.
  */
-void WriteDataMemory(int address, int value){
+void WriteDataMemory(int address, int value)
+{
     data_memory[address] = value;
     printf("Update DataMemory Address:%d DataMemory Data: %d\n", address, value);
 }
@@ -24,11 +26,13 @@ void WriteDataMemory(int address, int value){
 /**
  * Print all non-zero data stored in the data memory.
  */
-void PrintAllDataMemory(){
+void PrintAllDataMemory()
+{
     for (int i = 0; i < 2048; i++)
-    {   
-        if (data_memory[i] != 0){
-        printf("Address:%d DataMemory Data: %d\n", i, data_memory[i]);
+    {
+        if (data_memory[i] != 0)
+        {
+            printf("Address:%d DataMemory Data: %d\n", i, data_memory[i]);
         }
     }
 }
@@ -36,7 +40,8 @@ void PrintAllDataMemory(){
 /**
  * Reset the data memory by setting all values to zero.
  */
-void ResetDataMemory(){
+void ResetDataMemory()
+{
     for (int i = 0; i < 2048; i++)
     {
         data_memory[i] = 0;
