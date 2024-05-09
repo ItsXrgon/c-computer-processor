@@ -17,7 +17,7 @@ void updateCarryFlag(int operand1, int operand2, int result);
  * @param operand2 The second operand of the arithmetic operation.
  * @param result The result of the arithmetic operation.
  */
-void updateOverflowFlag(int operand1, int operand2, int result);
+void updateOverflowFlag(int operand1, int operand2, int result,int operation);
 
 /**
  * Updates the negative flag based on the result of an arithmetic operation.

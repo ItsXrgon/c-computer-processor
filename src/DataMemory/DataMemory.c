@@ -4,7 +4,7 @@
  * @param address The memory address to read from.
  * @return The data stored at the specified address.
  */
-unsigned short data_memory[2048];
+unsigned short int data_memory[2048];
 
 int ReadDataMemory(int address)
 {

@@ -87,20 +87,20 @@ You are required to understand the pattern in the example and implement it.
 
 - The opcodes are from 0 to 11 according to the instructions order in the following table:
 
-  | Name                   | Format         | Operation                       |
-  | ---------------------- | -------------- | ------------------------------- |
-  | Add                    | ADD R1 R2      | R1 = R1 + R2                    |
-  | Subtract               | SUB R1 R2      | R1 = R1 - R2                    |
-  | Multiply               | MUL R1 R2      | R1 = R1 \* R2                   |
-  | Move Immediate         | MOVI R1 IMM    | R1 = IMM                        |
-  | Branch if Equal Zero   | BEQZ R1 IMM    | if(R1 == 0){PC = PC + 1 + IMM } |
-  | And IMM                | ANDI R1 IMM    | R1 = R1 & IMM                   |
-  | Exclusive OR           | EOR R1 R2      | R1 = R1 ⊕ R2                    |
-  | Branch Register        | BR R1 R2       | PC = R1 concat R2               |
-  | Shift Arithmetic left  | SAL R1 IMM     | R1 = R1 << IMM                  |
-  | Shift Arithmetic Right | SAR R1 IMM     | R1 = R1 >> IMM                  |
-  | load to Register       | LDR R1 Address | R1 = MEM[Address]               |
-  | Store from Register    | STR R1 Address | MEM[Address] = R1               |
+  | Name                   | OpCode | Format         | Operation                       |
+  | ---------------------- | ------ | -------------- | ------------------------------- |
+  | Add                    | 0      | ADD R1 R2      | R1 = R1 + R2                    |
+  | Subtract               | 1      | SUB R1 R2      | R1 = R1 - R2                    |
+  | Multiply               | 2      | MUL R1 R2      | R1 = R1 \* R2                   |
+  | Move Immediate         | 3      | MOVI R1 IMM    | R1 = IMM                        |
+  | Branch if Equal Zero   | 4      | BEQZ R1 IMM    | if(R1 == 0){PC = PC + 1 + IMM } |
+  | And IMM                | 5      | ANDI R1 IMM    | R1 = R1 & IMM                   |
+  | Exclusive OR           | 6      | EOR R1 R2      | R1 = R1 ⊕ R2                    |
+  | Branch Register        | 7      | BR R1 R2       | PC = R1 concat R2               |
+  | Shift Arithmetic left  | 8      | SAL R1 IMM     | R1 = R1 << IMM                  |
+  | Shift Arithmetic Right | 9      | SAR R1 IMM     | R1 = R1 >> IMM                  |
+  | load to Register       | 10     | LDR R1 Address | R1 = MEM[Address]               |
+  | Store from Register    | 11     | STR R1 Address | MEM[Address] = R1               |
 
 ## Registers
 

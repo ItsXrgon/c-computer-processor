@@ -4,14 +4,15 @@
 /* ^^ these are the include guards */
 
 #include <stdbool.h>
+#include <stdint.h>
 
 /**
  * @brief Represents an instruction in the processor.
  */
 typedef struct {
-    short opcode;       /**< The opcode of the instruction. */
-    short operand1;     /**< The first operand of the instruction. */
-    short value2;       /**< The second operand or immediate value or address. */
+    uint8_t opcode :4;       /**< The opcode of the instruction. */
+    uint8_t operand1 : 6;     /**< The first operand of the instruction. */
+    uint8_t value2 : 6;       /**< The second operand or immediate value or address. */
     char type;          /**< The type of the instruction. */
 } Instruction;
 
@@ -19,9 +20,19 @@ typedef struct {
  * @brief Represents a stage in the processor pipeline.
  */
 typedef struct {
-    Instruction instruction;    /**< The instruction in the pipeline stage. */
+    Instruction instruction;    /**< The decoded instruction in the pipeline stage. */
     bool valid;                 /**< Indicates if the stage is valid. */
-    short pcVal;                /**< The program counter value. to be able to print it out during the pipeline*/
+    uint8_t pcVal;                /**< The program counter value. to be able to print it out during the pipeline*/
 } PipelineStage;
+
+/**
+ * @brief Represents the fetched instruction before decoding.
+ */
+typedef struct {
+   short int instruction;    /**< The fetched instruction. */
+   bool valid;               /**< Indicates if the fetched instruction is valid. */
+    uint8_t pcVal;                /**< The program counter value. */
+} FetchedInstruction;
+
 
 #endif

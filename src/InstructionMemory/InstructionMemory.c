@@ -7,8 +7,8 @@
 #include <string.h>
 
 // Global variables
-Instruction instruction_memory[1024];
-PipelineStage pipeline1; // Saving the fetched instruction to hand over to decode stage next CC
+short int instruction_memory[1024];
+FetchedInstruction pipeline1; // Saving the fetched instruction to hand over to decode stage next CC
 PipelineStage pipeline2; // holds the instruction to be decoded
 PipelineStage pipeline3; // Saving the decoded instruction to hand over to excute stage next CC
 PipelineStage pipeline4; // holds the instruction to be executed
@@ -16,7 +16,6 @@ PipelineStage pipeline4; // holds the instruction to be executed
 
 // Function to reset the pipeline stages
 void ResetPipeline() {
-    pipeline1.valid = false;
     pipeline2.valid = false;
     pipeline3.valid = false;
     pipeline4.valid = false;
@@ -24,27 +23,25 @@ void ResetPipeline() {
     pipeline2.pcVal = 0;
     pipeline3.pcVal = 0;
     pipeline4.pcVal = 0;
-    pipeline1.instruction.opcode = -1;
     pipeline2.instruction.opcode = -1;
     pipeline3.instruction.opcode = -1;
     pipeline4.instruction.opcode = -1;
-    pipeline1.instruction.operand1 = 0;
     pipeline2.instruction.operand1 = 0;
     pipeline3.instruction.operand1 = 0;
     pipeline4.instruction.operand1 = 0;
-    pipeline1.instruction.value2 = 0;
     pipeline2.instruction.value2 = 0;
     pipeline3.instruction.value2 = 0;
     pipeline4.instruction.value2 = 0;
-    pipeline1.instruction.type = 'R';
     pipeline2.instruction.type = 'R';
     pipeline3.instruction.type = 'R';
     pipeline4.instruction.type = 'R';
+
+    pipeline1.instruction = 0;
     
 }
 
 // Function to convert opcode string to corresponding opcode value
-short incodeOpcode(char *opcode)
+uint8_t incodeOpcode(char *opcode)
 {
     if (strcmp(opcode, "ADD") == 0)
     {
@@ -100,14 +97,52 @@ short incodeOpcode(char *opcode)
     }
 }
 
+
+uint8_t GetOpcode(short int instruction)
+{
+    return instruction >> 12;
+}
+uint8_t GetOperand1(short int instruction)
+{
+    return (instruction >> 6) & 0x3F;
+}
+
+uint8_t GetValue2(short int instruction)
+{
+    return instruction & 0x3F;
+}
+
+char GetOpcodeType(uint8_t opcode)
+{
+    switch (opcode)
+    {
+    case 0:
+    case 1:
+    case 2:
+    case 6:
+    case 7:
+        return 'R';
+    case 3:
+    case 4:
+    case 5:
+    case 8:
+    case 9:
+    case 10:
+    case 11:
+        return 'I';
+    default:
+        return 'R';
+    }
+}
+
 // Function to write an instruction to the instruction memory at the given address
-void WriteInstructionMemory(int address, Instruction instruction)
+void WriteInstructionMemory(int address, short int instruction)
 {
     instruction_memory[address] = instruction;
 }
 
 // Function to read an instruction from the instruction memory at the given address
-Instruction ReadInstructionMemory(int address)
+short int ReadInstructionMemory(int address)
 {
     return instruction_memory[address];
 }
@@ -115,8 +150,8 @@ Instruction ReadInstructionMemory(int address)
 // Function to fetch an instruction from the instruction memory and update the fetch pipeline stage
 void fetchPipeline()
 {
-    Instruction instruction = ReadInstructionMemory(GetPC());
-    if (instruction.opcode == -1) {
+    short int instruction = ReadInstructionMemory(GetPC());
+    if (instruction == -1) {
         printf("No more Instructions\n");
         pipeline1.valid = false;
         return;
@@ -129,12 +164,21 @@ void fetchPipeline()
 
         printf("Fetched Instruction %d: Opcode:%d  Register:%d Reg/IMM:%d Type:%c\n",
                pipeline1.pcVal,
-               instruction.opcode,
-               instruction.operand1,
-               instruction.value2,
-               instruction.type);
+               GetOpcode(instruction),
+                GetOperand1(instruction),
+                GetValue2(instruction),
+                GetOpcodeType(GetOpcode(instruction)));
         IncrementPC();
     }
+}
+Instruction decode(short int instruction)
+{
+    Instruction ins;
+    ins.opcode = GetOpcode(instruction);
+    ins.operand1 = GetOperand1(instruction);
+    ins.value2 = GetValue2(instruction);
+    ins.type = GetOpcodeType(ins.opcode);
+    return ins;
 }
 
 // Function to decode the instruction in the decode pipeline stage and update the execute pipeline stage
@@ -160,7 +204,7 @@ void decodePipeline()
 
     if (pipeline1.valid)
     {
-        pipeline2.instruction = pipeline1.instruction;
+        pipeline2.instruction = decode(pipeline1.instruction);
         pipeline2.pcVal = pipeline1.pcVal;
         pipeline2.valid = true;
     }
@@ -197,6 +241,8 @@ void executePipeline()
         pipeline4.valid = false;
     }
 }
+
+
 
 // Function to execute the given instruction
 void execute(Instruction ins)
@@ -249,10 +295,7 @@ void ResetInstructionMemory()
 {
     for (int i = 0; i < 1024; i++)
     {
-        instruction_memory[i].opcode = -1;
-        instruction_memory[i].operand1 = 0;
-        instruction_memory[i].value2 = 0;
-        instruction_memory[i].type = 'R';
+        instruction_memory[i] = -1;
     }
 }
 
@@ -261,14 +304,14 @@ void PrintAllInstructionMemory()
 {
     for (int i = 0; i < 1024; i++)
     {
-        if (instruction_memory[i].opcode != -1)
+        if (instruction_memory[i] != -1)
         {
-            printf("Instruction %d : Opcode:%d Register: %d  Reg2/IMM: %d Type:%c\n",
+            printf("Instruction %d: Opcode:%d  Register:%d Reg/IMM:%d Type:%c\n",
                    i,
-                   instruction_memory[i].opcode,
-                   instruction_memory[i].operand1,
-                   instruction_memory[i].value2,
-                   instruction_memory[i].type);
+                   GetOpcode(instruction_memory[i]),
+                   GetOperand1(instruction_memory[i]),
+                   GetValue2(instruction_memory[i]),
+                   GetOpcodeType(GetOpcode(instruction_memory[i])));
         }
     }
 }

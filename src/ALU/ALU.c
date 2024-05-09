@@ -17,7 +17,7 @@ void ADD(int R1, int R2)
     updateNegativeFlag(result);
     updateSignFlag(result);
     updateZeroFlag(result);
-    updateOverflowFlag(r1, r2, result);
+    updateOverflowFlag(r1, r2, result,0);
     WriteRegister(R1, result);
 }
 
@@ -36,7 +36,7 @@ void SUB(int R1, int R2)
     updateNegativeFlag(result);
     updateSignFlag(result);
     updateZeroFlag(result);
-    updateOverflowFlag(r1, r2, result);
+    updateOverflowFlag(r1, r2, result,1);
     WriteRegister(R1, result);
 }
 
