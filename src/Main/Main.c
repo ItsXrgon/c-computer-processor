@@ -111,9 +111,7 @@ int main()
 {
     ResetProcessor();
     // Only works with absolute path of the txt file
-    LoadProgram("/home/youssef/Documents/Guc/CA/project/c-computer-processor/src/Test/test1.txt");
-
-     ;
+    LoadProgram("/home/youssef/Documents/Guc/CA/project/c-computer-processor/src/Test/test2.txt");
 
     /**
      * This function represents the main loop of the processor. It executes the pipeline stages
@@ -131,7 +129,7 @@ int main()
      */
     printf("Cycle: %i \n", clockcycles);
     fetchPipeline();
-    while (pipeline1.valid != false || pipeline2.valid == true || pipeline3.valid == true || pipeline4.valid == true) {
+    while (pipeline1.valid == true || pipeline2.valid == true || pipeline3.valid == true || pipeline4.valid == true) {
         
         if( clockcycles !=1){
             printf("Cycle: %i \n", clockcycles);
