@@ -1,5 +1,6 @@
 #include "../Headers/Registers.h"
 #include "../Headers/DataMemory.h"
+#include <stdint.h>
 
 /**
  * Performs addition of two registers and stores the result in the first register.
@@ -10,9 +11,9 @@
  */
 void ADD(int R1, int R2)
 {
-    int result = ReadRegister(R1) + ReadRegister(R2);
-    int r1 = ReadRegister(R1);
-    int r2 = ReadRegister(R2);
+    int8_t result = ReadRegister(R1) + ReadRegister(R2);
+    int8_t r1 = ReadRegister(R1);
+    int8_t r2 = ReadRegister(R2);
     updateCarryFlag(r1, r2, result);
     updateNegativeFlag(result);
     updateSignFlag(result);
@@ -30,9 +31,9 @@ void ADD(int R1, int R2)
  */
 void SUB(int R1, int R2)
 {
-    int result = ReadRegister(R1) - ReadRegister(R2);
-    int r1 = ReadRegister(R1);
-    int r2 = ReadRegister(R2);
+    int8_t result = ReadRegister(R1) - ReadRegister(R2);
+    int8_t r1 = ReadRegister(R1);
+    int8_t r2 = ReadRegister(R2);
     updateNegativeFlag(result);
     updateSignFlag(result);
     updateZeroFlag(result);

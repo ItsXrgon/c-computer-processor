@@ -12,7 +12,7 @@
 #define Togle(data)   (data =~data )         /** Togle Data value     **/
 
 
-uint8_t generalRegisters[64]; // Array to store general purpose registers
+int8_t generalRegisters[64]; // Array to store general purpose registers
 uint8_t SREG = 0;              // status register flags: C, V, N, S, Z ,0,0,0
 uint8_t pc = 0;               // Program counter
 
@@ -21,7 +21,7 @@ uint8_t pc = 0;               // Program counter
  * @param reg The register number.
  * @return The value of the register.
  */
-int ReadRegister(int reg)
+int8_t ReadRegister(uint8_t reg)
 {
     return generalRegisters[reg];
 }
@@ -31,7 +31,7 @@ int ReadRegister(int reg)
  * @param address The register number.
  * @param value The value to be written.
  */
-void WriteRegister(int address, int value)
+void WriteRegister(uint8_t address, int8_t value)
 {
     generalRegisters[address] = value;
     printf("Updated: R%d: %d\n", address, value);
@@ -49,7 +49,7 @@ void IncrementPC()
  * @brief Sets the value of the program counter.
  * @param value The value to be set.
  */
-void SetPC(int value)
+void SetPC(uint8_t value)
 {
     pc = value;
     printf("Updated: PC: %d\n", value);
@@ -59,7 +59,7 @@ void SetPC(int value)
  * @brief Gets the value of the program counter.
  * @return The value of the program counter.
  */
-int GetPC()
+uint8_t GetPC()
 {
     return pc;
 }

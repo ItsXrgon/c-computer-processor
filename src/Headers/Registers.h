@@ -1,6 +1,8 @@
 #ifndef FUNCTIONS_H_INCLUDED
 #define FUNCTIONS_H_INCLUDED
 
+#include <stdint.h>
+
 /**
  * Updates the carry flag based on the result of an arithmetic operation.
  *
@@ -46,7 +48,7 @@ void updateZeroFlag(int result);
  * @param reg The register number.
  * @return The value stored in the register.
  */
-int ReadRegister(int reg);
+int8_t ReadRegister(uint8_t reg);
 
 /**
  * Writes a value to a register.
@@ -54,7 +56,7 @@ int ReadRegister(int reg);
  * @param reg The register number.
  * @param value The value to be written to the register.
  */
-void WriteRegister(int reg, int value);
+void WriteRegister(uint8_t reg, int8_t value);
 
 /**
  * Resets all registers to their initial values.
@@ -76,14 +78,14 @@ void PrintStatusRegister();
  *
  * @return The value of the program counter.
  */
-int GetPC();
+uint8_t GetPC();
 
 /**
  * Sets the value of the program counter (PC).
  *
  * @param value The value to be set as the program counter.
  */
-void SetPC(int value);
+void SetPC(uint8_t value);
 
 /**
  * Increments the value of the program counter (PC) by 1.
