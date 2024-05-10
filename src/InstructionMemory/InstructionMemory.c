@@ -100,14 +100,14 @@ uint8_t incodeOpcode(char *opcode)
 
 uint8_t GetOpcode(short int instruction)
 {
-    return instruction >> 12;
+    return (instruction >> 12) & 0xF;
 }
 uint8_t GetOperand1(short int instruction)
 {
     return (instruction >> 6) & 0x3F;
 }
 
-uint8_t GetValue2(short int instruction)
+int8_t GetValue2(short int instruction)
 {
     return instruction & 0x3F;
 }

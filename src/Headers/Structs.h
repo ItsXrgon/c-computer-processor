@@ -12,7 +12,7 @@
 typedef struct {
     uint8_t opcode :4;       /**< The opcode of the instruction. */
     uint8_t operand1 : 6;     /**< The first operand of the instruction. */
-    uint8_t value2 : 6;       /**< The second operand or immediate value or address. */
+    int8_t value2 : 6;       /**< The second operand or immediate value or address. */
     char type;          /**< The type of the instruction. */
 } Instruction;
 
