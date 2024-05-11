@@ -18,7 +18,7 @@ extern PipelineStage pipeline2;              /**< External variable representing
 extern PipelineStage pipeline3;              /**< External variable representing the third pipeline stage. */
 extern PipelineStage pipeline4;              /**< External variable representing the fourth pipeline stage. */
 extern unsigned short int DataMemory[1024];      /**< External array representing the data memory. */
-extern uint8_t Registers[64];                    /**< External array representing the registers. */
+extern int8_t Registers[64];                    /**< External array representing the registers. */
 extern uint8_t SREG;                          /**< External array representing the status register. SREG[0] = C, SREG[1] = V, SREG[2] = N, SREG[3] = S, SREG[4] = Z */
 extern uint8_t pc;                               /**< External variable representing the program counter. */
 
@@ -111,7 +111,7 @@ int main()
 {
     ResetProcessor();
     // Only works with absolute path of the txt file
-    LoadProgram("/home/youssef/Documents/Guc/CA/project/c-computer-processor/src/Test/test2.txt");
+    LoadProgram("/home/farida/CA/c-computer-processor/src/Test/test1.txt");
 
     /**
      * This function represents the main loop of the processor. It executes the pipeline stages

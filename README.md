@@ -15,7 +15,7 @@
      1. build: this is the directory (output) of the build command
   1. `cd build`
   1. `make`
-  1. `./c-computer-processor`
+  1. `./processor`
 
 # Double Big Harvard combo large arithmetic shifts
 
