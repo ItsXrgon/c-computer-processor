@@ -131,9 +131,9 @@ smo please format into table
 | 1   | MOVI R1 10  | 3      | R1 = 10       | nth        |
 | 2   | MOVI R3 20  | 3      | R3 = 20       | nth        |
 | 3   | SUB R0 R1   | 1      | R0 = 10-10=0  | nth        |
-| 4   | BEQZ R0 0   | 4      | nth           | nth        |
+| 4   | BEQZ R0 0   | 4      | R0=0          | nth        |
 | 5   | ADD R3 R1   | 0      | R3 = 20+10=30 | nth        |
-| 6   | BR R0 R1    | 7      | nth           | nth        |
+| 6   | BR R0 R1    | 7      | R0=0          | nth        |
 | 7   | STR R0 0    | 11     | Mem[0]= 0     | nth        |
 
 smo please format into table
