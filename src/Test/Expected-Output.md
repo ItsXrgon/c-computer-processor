@@ -78,15 +78,15 @@ smo please format into table
 | 2   | MOVI R2 15  | 3      | R2 = 15           | nth                 |
 | 3   | MOVI R3 4   | 3      | R3 = 4            | nth                 |
 | 4   | MOVI R4 3   | 3      | R4 = 3            | nth                 |
-| 5   | MUL R9 2    | 2      | R9 = 10 x 2=20    | nth                 |
-| 6   | ADD R9 3    | 0      | R9 = 20 x 3=60    | nth                 |
+| 5   | MUL R9 R2   | 2      | R9 = 10 x 15=150  | nth                 |
+| 6   | ADD R9 R3   | 0      | R9 = 150+4=154    | nth                 |
 | 7   | MOVI R7 10  | 3      | R7 = 10           | nth                 |
 | 8   | MOVI R6 1   | 3      | R6 = 1            | C = V = N = S = Z = |
 | 9   | MUL R4 R7   | 2      | R4 = 10x3=30      | V = N = S = Z =     |
 | 10  | MUL R0 R7   | 2      | R0 = 20x10=200    | N = Z =             |
 | 11  | ADD R4 R0   | 0      | R4 = 30+200=230   | N = Z =             |
 | 12  | SUB R4 R6   | 1      | R4 = 1-230=-229   | nth                 |
-| 13  | SUB R9 R4   | 1      | R9 = -229-60=-289 | nth                 |
+| 13  | SUB R9 R4   | 1      | R9 = -229-154=-383| nth                 |
 
 ## Registers
 
@@ -98,7 +98,7 @@ smo please format into table
 | 4        | 229   |
 | 6        | 1     |
 | 7        | 10    |
-| 9        | -289  |
+| 9        | -383  |
 
 ## Data Memory
 
@@ -111,8 +111,8 @@ smo please format into table
 | 2           | 3      | 2        | 15      | I    |
 | 3           | 3      | 3        | 4       | I    |
 | 4           | 3      | 4        | 3       | I    |
-| 5           | 2      | 9        | 2       | I    |
-| 6           | 0      | 9        | 3       | I    |
+| 5           | 2      | 9        | 2       | R    |
+| 6           | 0      | 9        | 3       | R    |
 | 7           | 3      | 7        | 10      | I    |
 | 8           | 3      | 6        | 1       | I    |
 | 9           | 2      | 4        | 7       | R    |
