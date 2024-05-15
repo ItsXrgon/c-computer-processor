@@ -5,9 +5,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdint.h>
 
 // Global variables
-short int instruction_memory[1024];
+int16_t instruction_memory[1024];
 FetchedInstruction pipeline1; // Saving the fetched instruction to hand over to decode stage next CC
 PipelineStage pipeline2; // holds the instruction to be decoded
 PipelineStage pipeline3; // Saving the decoded instruction to hand over to excute stage next CC
@@ -40,74 +41,18 @@ void ResetPipeline() {
     
 }
 
-// Function to convert opcode string to corresponding opcode value
-uint8_t incodeOpcode(char *opcode)
-{
-    if (strcmp(opcode, "ADD") == 0)
-    {
-        return 0;
-    }
-    else if (strcmp(opcode, "SUB") == 0)
-    {
-        return 1;
-    }
-    else if (strcmp(opcode, "MUL") == 0)
-    {
-        return 2;
-    }
-    else if (strcmp(opcode, "MOVI") == 0)
-    {
-        return 3;
-    }
-    else if (strcmp(opcode, "BEQZ") == 0)
-    {
-        return 4;
-    }
-    else if (strcmp(opcode, "ANDI") == 0)
-    {
-        return 5;
-    }
-    else if (strcmp(opcode, "EOR") == 0)
-    {
-        return 6;
-    }
-    else if (strcmp(opcode, "BR") == 0)
-    {
-        return 7;
-    }
-    else if (strcmp(opcode, "SAL") == 0)
-    {
-        return 8;
-    }
-    else if (strcmp(opcode, "SAR") == 0)
-    {
-        return 9;
-    }
-    else if (strcmp(opcode, "LDR") == 0)
-    {
-        return 10;
-    }
-    else if (strcmp(opcode, "STR") == 0)
-    {
-        return 11;
-    }
-    else
-    {
-        return -1;
-    }
-}
 
 
-uint8_t GetOpcode(short int instruction)
+uint8_t GetOpcode(uint16_t instruction)
 {
     return (instruction >> 12) & 0xF;
 }
-uint8_t GetOperand1(short int instruction)
+uint8_t GetOperand1(uint16_t instruction)
 {
     return (instruction >> 6) & 0x3F;
 }
 
-int8_t GetValue2(short int instruction)
+int8_t GetValue2(uint16_t instruction)
 {
     return instruction & 0x3F;
 }
@@ -136,13 +81,13 @@ char GetOpcodeType(uint8_t opcode)
 }
 
 // Function to write an instruction to the instruction memory at the given address
-void WriteInstructionMemory(int address, short int instruction)
+void WriteInstructionMemory(uint16_t  address, uint16_t instruction)
 {
     instruction_memory[address] = instruction;
 }
 
 // Function to read an instruction from the instruction memory at the given address
-short int ReadInstructionMemory(int address)
+int16_t ReadInstructionMemory(uint16_t address)
 {
     return instruction_memory[address];
 }
@@ -150,7 +95,7 @@ short int ReadInstructionMemory(int address)
 // Function to fetch an instruction from the instruction memory and update the fetch pipeline stage
 void fetchPipeline()
 {
-    short int instruction = ReadInstructionMemory(GetPC());
+    int16_t instruction = ReadInstructionMemory(GetPC());
     if (instruction == -1) {
         printf("No more Instructions\n");
         pipeline1.valid = false;
@@ -171,7 +116,8 @@ void fetchPipeline()
         IncrementPC();
     }
 }
-Instruction decode(short int instruction)
+
+Instruction decode(uint16_t  instruction)
 {
     Instruction ins;
     ins.opcode = GetOpcode(instruction);
@@ -209,40 +155,6 @@ void decodePipeline()
         pipeline2.valid = true;
     }
 }
-
-// Function to execute the instruction in the execute pipeline stage
-void executePipeline()
-{
-    if (pipeline4.valid)
-    {
-        printf("Executed Instruction %d: Opcode:%d  Register:%d Reg/IMM:%d Type:%c\n",
-               pipeline4.pcVal,
-               pipeline4.instruction.opcode,
-               pipeline4.instruction.operand1,
-               pipeline4.instruction.value2,
-               pipeline4.instruction.type);
-        execute(pipeline4.instruction);
-        pipeline4.valid = false;
-    }
-    else
-    {
-        printf("No instruction to be executed\n");
-    }
-
-    if (pipeline3.valid)
-    {
-        pipeline4.instruction = pipeline3.instruction;
-        pipeline4.pcVal = pipeline3.pcVal;
-        pipeline4.valid = true;
-        pipeline3.valid = false;
-    }
-    else
-    {
-        pipeline4.valid = false;
-    }
-}
-
-
 
 // Function to execute the given instruction
 void execute(Instruction ins)
@@ -286,9 +198,45 @@ void execute(Instruction ins)
         STR(ins.operand1, ins.value2);
         break;
     default:
-        break;
+        return;
     }
 }
+
+// Function to execute the instruction in the execute pipeline stage
+void executePipeline()
+{
+    if (pipeline4.valid)
+    {
+        printf("Executed Instruction %d: Opcode:%d  Register:%d Reg/IMM:%d Type:%c\n",
+               pipeline4.pcVal,
+               pipeline4.instruction.opcode,
+               pipeline4.instruction.operand1,
+               pipeline4.instruction.value2,
+               pipeline4.instruction.type);
+        execute(pipeline4.instruction);
+        pipeline4.valid = false;
+    }
+    else
+    {
+        printf("No instruction to be executed\n");
+    }
+
+    if (pipeline3.valid)
+    {
+        pipeline4.instruction = pipeline3.instruction;
+        pipeline4.pcVal = pipeline3.pcVal;
+        pipeline4.valid = true;
+        pipeline3.valid = false;
+    }
+    else
+    {
+        pipeline4.valid = false;
+    }
+}
+
+
+
+
 
 // Function to reset the instruction memory
 void ResetInstructionMemory()
@@ -302,16 +250,20 @@ void ResetInstructionMemory()
 // Function to print all instructions in the instruction memory
 void PrintAllInstructionMemory()
 {
+
+    printf("Final State of Instruction Memory: \n");
+    printf("-------------------------------------------------- \n");
     for (int i = 0; i < 1024; i++)
     {
         if (instruction_memory[i] != -1)
         {
-            printf("Instruction %d: Opcode:%d  Register:%d Reg/IMM:%d Type:%c\n",
+            printf("Instruction %d: Opcode:%d  Register:%d  Reg/IMM:%d  Type:%c\n",
                    i,
                    GetOpcode(instruction_memory[i]),
                    GetOperand1(instruction_memory[i]),
                    GetValue2(instruction_memory[i]),
                    GetOpcodeType(GetOpcode(instruction_memory[i])));
+            printf("-------------------------------------------------- \n");
         }
     }
 }

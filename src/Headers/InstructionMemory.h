@@ -18,13 +18,6 @@
  */
 void ResetPipeline();
 
-/**
- * @brief Converts the opcode string to its corresponding integer value.
- * 
- * @param opcode The opcode string to be converted.
- * @return The integer value of the opcode.
- */
-uint8_t incodeOpcode(char* opcode);
 
 /**
  * @brief get the opcode of the instruction
@@ -32,7 +25,7 @@ uint8_t incodeOpcode(char* opcode);
  * @param instruction The instruction to get the opcode from.
  * @return The opcode of the instruction.
 */
-uint8_t GetOpcode(short int instruction);
+uint8_t GetOpcode(uint16_t instruction);
 
 /**
  * @brief get the first operand of the instruction
@@ -40,7 +33,7 @@ uint8_t GetOpcode(short int instruction);
  * @param instruction The instruction to get the first operand from.
  * @return The first operand of the instruction.
 */
-uint8_t GetOperand1(short int instruction);
+uint8_t GetOperand1(uint16_t instruction);
 
 /**
  * @brief get the second operand of the instruction
@@ -48,7 +41,7 @@ uint8_t GetOperand1(short int instruction);
  * @param instruction The instruction to get the second operand/Immediate value from.
  * @return The second operand/Immediate value of the instruction.
 */
-uint8_t GetValue2(short int instruction);
+int8_t GetValue2(uint16_t instruction);
 
 /**
  * @brief get the type of the instruction
@@ -64,7 +57,7 @@ char GetOpcodeType(uint8_t opcode);
  * @param address The address in the instruction memory where the instruction will be written.
  * @param instruction The instruction to be written.
  */
-void WriteInstructionMemory(int address, short int instruction);
+void WriteInstructionMemory(uint16_t  address, uint16_t instruction);
 
 /**
  * @brief Reads an instruction from the instruction memory at the specified address.
@@ -72,7 +65,7 @@ void WriteInstructionMemory(int address, short int instruction);
  * @param address The address in the instruction memory from where the instruction will be read.
  * @return The instruction read from the instruction memory.
  */
-short int ReadInstructionMemory(int address);
+uint16_t ReadInstructionMemory(uint16_t address);
 
 /**
  * @brief Fetches the next instruction from the instruction memory and updates the pipeline.
@@ -95,7 +88,7 @@ void executePipeline();
  * @param instruction The instruction to be decoded.
  * @return The decoded instruction.
  */
-Instruction decode(short int instruction);
+Instruction decode(uint16_t  instruction);
 
 /**
  * @brief Executes the given instruction.

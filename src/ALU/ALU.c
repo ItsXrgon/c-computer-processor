@@ -1,5 +1,6 @@
 #include "../Headers/Registers.h"
 #include "../Headers/DataMemory.h"
+#include "../Headers/InstructionMemory.h"
 #include <stdint.h>
 
 /**
@@ -9,12 +10,12 @@
  * @param R1 The first register.
  * @param R2 The second register.
  */
-void ADD(int R1, int R2)
+void ADD(uint8_t R1, uint8_t R2)
 {
-    int8_t result = ReadRegister(R1) + ReadRegister(R2);
-    int8_t r1 = ReadRegister(R1);
-    int8_t r2 = ReadRegister(R2);
-    updateCarryFlag(r1, r2, result);
+    uint8_t result = ReadRegister(R1) + ReadRegister(R2);
+    uint8_t r1 = ReadRegister(R1);
+    uint8_t r2 = ReadRegister(R2);
+    updateCarryFlag(r1, r2);
     updateNegativeFlag(result);
     updateSignFlag(result);
     updateZeroFlag(result);
@@ -29,7 +30,7 @@ void ADD(int R1, int R2)
  * @param R1 The first register.
  * @param R2 The second register.
  */
-void SUB(int R1, int R2)
+void SUB(uint8_t R1, uint8_t R2)
 {
     int8_t result = ReadRegister(R1) - ReadRegister(R2);
     int8_t r1 = ReadRegister(R1);
@@ -48,11 +49,11 @@ void SUB(int R1, int R2)
  * @param R1 The first register.
  * @param R2 The second register.
  */
-void MUL(int R1, int R2)
+void MUL(uint8_t R1, uint8_t R2)
 {
-    int result = ReadRegister(R1) * ReadRegister(R2);
-    int r1 = ReadRegister(R1);
-    int r2 = ReadRegister(R2);
+    int8_t result = ReadRegister(R1) * ReadRegister(R2);
+    int8_t r1 = ReadRegister(R1);
+    int8_t r2 = ReadRegister(R2);
 
     updateNegativeFlag(result);
     updateZeroFlag(result);
@@ -65,7 +66,7 @@ void MUL(int R1, int R2)
  * @param R1 The register to store the immediate value in.
  * @param IMM The immediate value.
  */
-void MOVI(int R1, int IMM)
+void MOVI(uint8_t R1, int8_t IMM)
 {
     WriteRegister(R1, IMM);
 }
@@ -76,7 +77,7 @@ void MOVI(int R1, int IMM)
  * @param R1 The register to check.
  * @param IMM The instruction address to branch to.
  */
-void BEQZ(int R1, int IMM)
+void BEQZ(uint8_t R1, int8_t IMM)
 {
     if (ReadRegister(R1) == 0)
     {
@@ -92,7 +93,7 @@ void BEQZ(int R1, int IMM)
  * @param R1 The register.
  * @param IMM The immediate value.
  */
-void ANDI(int R1, int IMM)
+void ANDI(uint8_t R1, int8_t IMM)
 {
     updateNegativeFlag(ReadRegister(R1) & IMM);
     updateZeroFlag(ReadRegister(R1) & IMM);
@@ -106,11 +107,11 @@ void ANDI(int R1, int IMM)
  * @param R1 The first register.
  * @param R2 The second register.
  */
-void EOR(int R1, int R2)
+void EOR(uint8_t R1, uint8_t R2)
 {
-    int result = ReadRegister(R1) ^ ReadRegister(R2);
-    int r1 = ReadRegister(R1);
-    int r2 = ReadRegister(R2);
+    int8_t result = ReadRegister(R1) ^ ReadRegister(R2);
+    int8_t r1 = ReadRegister(R1);
+    int8_t r2 = ReadRegister(R2);
     updateNegativeFlag(result);
     updateZeroFlag(result);
     WriteRegister(R1, result);
@@ -122,7 +123,7 @@ void EOR(int R1, int R2)
  * @param R1 The first register.
  * @param R2 The second register.
  */
-void BR(int R1, int R2)
+void BR(uint8_t R1, uint8_t R2)
 {
     SetPC((ReadRegister(R1) << 16) | ReadRegister(R2) - 1);
     ResetPipeline();
@@ -135,10 +136,10 @@ void BR(int R1, int R2)
  * @param R1 The register.
  * @param IMM The number of bits to shift by.
  */
-void SAL(int R1, int IMM)
+void SAL(uint8_t R1, int8_t IMM)
 {
-    int result = ReadRegister(R1) << IMM;
-    int r1 = ReadRegister(R1);
+    int8_t result = ReadRegister(R1) << IMM;
+    int8_t r1 = ReadRegister(R1);
     updateNegativeFlag(result);
     updateZeroFlag(result);
     WriteRegister(R1, result);
@@ -151,10 +152,10 @@ void SAL(int R1, int IMM)
  * @param R1 The register.
  * @param IMM The number of bits to shift by.
  */
-void SAR(int R1, int IMM)
+void SAR(uint8_t R1, int8_t IMM)
 {
-    int result = ReadRegister(R1) >> IMM;
-    int r1 = ReadRegister(R1);
+    int8_t result = ReadRegister(R1) >> IMM;
+    int8_t r1 = ReadRegister(R1);
     updateNegativeFlag(result);
     updateZeroFlag(result);
     WriteRegister(R1, result);
@@ -166,7 +167,7 @@ void SAR(int R1, int IMM)
  * @param R1 The register to store the loaded value in.
  * @param address The memory address to load from.
  */
-void LDR(int R1, int address)
+void LDR(uint8_t R1, uint8_t address)
 {
     WriteRegister(R1, ReadDataMemory(address));
 }
@@ -177,7 +178,7 @@ void LDR(int R1, int address)
  * @param R1 The register containing the value to store.
  * @param address The memory address to store the value in.
  */
-void STR(int R1, int address)
+void STR(uint8_t R1, uint8_t address)
 {
     WriteDataMemory(address, ReadRegister(R1));
 }

@@ -2,6 +2,7 @@
 #define FUNCTIONS_H_INCLUDED
 
 #include <stdint.h>
+#include <stdbool.h>
 
 /**
  * Updates the carry flag based on the result of an arithmetic operation.
@@ -10,7 +11,7 @@
  * @param operand2 The second operand of the arithmetic operation.
  * @param result The result of the arithmetic operation.
  */
-void updateCarryFlag(int operand1, int operand2, int result);
+void updateCarryFlag(uint8_t operand1, uint8_t operand2);
 
 /**
  * Updates the overflow flag based on the result of an arithmetic operation.
@@ -19,28 +20,28 @@ void updateCarryFlag(int operand1, int operand2, int result);
  * @param operand2 The second operand of the arithmetic operation.
  * @param result The result of the arithmetic operation.
  */
-void updateOverflowFlag(int operand1, int operand2, int result,int operation);
+void updateOverflowFlag(int8_t operand1, int8_t operand2, int8_t result, bool operation);
 
 /**
  * Updates the negative flag based on the result of an arithmetic operation.
  *
  * @param result The result of the arithmetic operation.
  */
-void updateNegativeFlag(int result);
+void updateNegativeFlag(int8_t result);
 
 /**
  * Updates the sign flag based on the result of an arithmetic operation.
  *
  * @param result The result of the arithmetic operation.
  */
-void updateSignFlag(int result);
+void updateSignFlag(int8_t result);
 
 /**
  * Updates the zero flag based on the result of an arithmetic operation.
  *
  * @param result The result of the arithmetic operation.
  */
-void updateZeroFlag(int result);
+void updateZeroFlag(int8_t result);
 
 /**
  * Reads the value stored in a register.

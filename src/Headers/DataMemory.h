@@ -12,7 +12,7 @@
  *
  * returns: the value stored at the specified address
  */
-int ReadDataMemory(int address);
+int8_t ReadDataMemory(uint16_t address);
 
 /*
  * Function: WriteDataMemory
@@ -24,7 +24,7 @@ int ReadDataMemory(int address);
  *
  * returns: void
  */
-void WriteDataMemory(int address, int value);
+void WriteDataMemory(uint16_t address, int8_t value);
 
 /*
  * Function: PrintAllDataMemory

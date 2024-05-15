@@ -71,34 +71,44 @@ smo please format into table
 
 ## Instructions
 
-| ID  | Instruction | Opcode | Output            | Status Reg          |
-| --- | ----------- | ------ | ----------------- | ------------------- |
-| 0   | MOVI R0 20  | 3      | R0 = 20           | nth                 |
-| 1   | MOVI R9 10  | 3      | R9 = 10           | nth                 |
-| 2   | MOVI R2 15  | 3      | R2 = 15           | nth                 |
-| 3   | MOVI R3 4   | 3      | R3 = 4            | nth                 |
-| 4   | MOVI R4 3   | 3      | R4 = 3            | nth                 |
-| 5   | MUL R9 R2   | 2      | R9 = 10 x 15=150  | nth                 |
-| 6   | ADD R9 R3   | 0      | R9 = 150+4=154    | nth                 |
-| 7   | MOVI R7 10  | 3      | R7 = 10           | nth                 |
-| 8   | MOVI R6 1   | 3      | R6 = 1            | C = V = N = S = Z = |
-| 9   | MUL R4 R7   | 2      | R4 = 10x3=30      | V = N = S = Z =     |
-| 10  | MUL R0 R7   | 2      | R0 = 20x10=200    | N = Z =             |
-| 11  | ADD R4 R0   | 0      | R4 = 30+200=230   | N = Z =             |
-| 12  | SUB R4 R6   | 1      | R4 = 1-230=-229   | nth                 |
-| 13  | SUB R9 R4   | 1      | R9 = -229-154=-383| nth                 |
+| ID  | Instruction | Opcode | Output                 | Status Reg                        |
+| --- | ----------- | ------ | ---------------------- | --------------------------------- |
+| 0   | MOVI R0 20  | 3      | R0 = 10                | NTH                               |
+| 1   | MOVI R9 10  | 3      | R9 = 8                 | nth                               |
+| 2   | MOVI R2 15  | 3      | R2 = 15                | nth                               |
+| 3   | MOVI R3 4   | 3      | R3 = 4                 | nth                               |
+| 4   | MOVI R4 3   | 3      | R4 = 3                 | nth                               |
+| 5   | MUL R9 R2   | 2      | R9 = 8 x 15 = 120      | N = 0 Z = 0                       |
+| 6   | ADD R9 R3   | 0      | R9 = 120 + 4 = 124     | C = 0, V = 0, N = 0, S = 0, Z = 0 |
+| 7   | MOVI R7 10  | 3      | R7 = 10                | nth                               |
+| 8   | MOVI R6 1   | 3      | R6 = 1                 | nth                               |
+| 9   | MUL R4 R7   | 2      | R4 = 10 x 3 = 30       | N = 0 Z = 0                       |
+| 10  | MUL R0 R7   | 2      | R0 = 10 x 10 = 100     | N = 0 Z = 0                       |
+| 11  | ADD R4 R0   | 0      | R4 = 30 + 100 = 130    | C = 0, V = 1, N = 0, S = 0, Z = 1 |
+| 12  | SUB R4 R6   | 1      | R4 = 1 - 130 = -129    | C = 0, V = 1, N = 1, S = 0, Z = 0 |
+| 13  | SUB R9 R4   | 1      | R9 = 124 - -129 = -353 | C = 0, V = 0, N = 1, S = 1, Z = 0 |
 
 ## Registers
 
-| Register | Value |
-| -------- | ----- |
-| 0        | 200   |
+| Register | Value | Comments                         |
+| -------- | ----- | -------------------------------- |
+| 0        | 100   |
 | 2        | 15    |
 | 3        | 4     |
-| 4        | 229   |
+| 4        | -129  | overflow will occur will be -127 |
 | 6        | 1     |
 | 7        | 10    |
-| 9        | -383  |
+| 9        | -383  | overflow occur will be -5        |
+
+## Status Register
+
+| Flage | Value |
+| ----- | ----- |
+| C     | 1     |
+| V     |       |
+| N     |       |
+| S     |       |
+| Z     |       |
 
 ## Data Memory
 
