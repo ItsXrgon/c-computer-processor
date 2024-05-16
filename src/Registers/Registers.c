@@ -5,6 +5,7 @@
 
 #include <stdint.h>
 #include <stdbool.h>
+#include <stdio.h>
 #define BitVal(data,y) ( (data>>y) & 1)      /** Return Data.Y value   **/
 #define SetBit(data,y)    data |= (1 << y)    /** Set Data.Y   to 1    **/
 #define ClearBit(data,y)  data &= ~(1 << y)   /** Clear Data.Y to 0    **/
@@ -14,7 +15,7 @@
 
 int8_t generalRegisters[64]; // Array to store general purpose registers
 uint8_t SREG = 0;              // status register flags: C, V, N, S, Z ,0,0,0
-uint8_t pc = 0;               // Program counter
+uint16_t pc = 0;               // Program counter
 
 /**
  * @brief Reads the value of a register.
@@ -49,7 +50,7 @@ void IncrementPC()
  * @brief Sets the value of the program counter.
  * @param value The value to be set.
  */
-void SetPC(uint8_t value)
+void SetPC(uint16_t value)
 {
     pc = value;
     printf("Updated: PC: %d\n", value);
@@ -70,21 +71,18 @@ uint8_t GetPC()
  * @param operand2 The second operand.
  * @param result The result of the operation.
  */
-void updateCarryFlag(int operand1, int operand2, int result)
+void updateCarryFlag(uint8_t operand1, uint8_t operand2)
 {
-    bool prev = BitVal(SREG, 0);
-    if (result < operand1 || result < operand2)
+    if ((operand1 + operand2) > 255)
     {
-        SREG = SetBit(SREG, 0);
+        SetBit(SREG, 0);
     }
     else
     {
-        SREG = ClearBit(SREG, 0);
+        ClearBit(SREG, 0);
     }
-    if (prev != BitVal(SREG, 0))
-    {
         printf("Carry Flag Updated: %d\n", BitVal(SREG, 0));
-    }
+    
 }
 
 /**
@@ -93,35 +91,38 @@ void updateCarryFlag(int operand1, int operand2, int result)
  * @param operand2 The second operand.
  * @param result The result of the operation.
  */
-void updateOverflowFlag(int operand1, int operand2, int result, int operation)
+void updateOverflowFlag(int8_t operand1, int8_t operand2, int8_t result, bool operation)
 {
-    bool prev = BitVal(SREG, 1);
-    if (operand1 > 0 && operand2 > 0 && result < 0)
-    {
-        SetBit(SREG, 1);
+    if(operation == 0){
+        if ((operand1 > 0 && operand2 > 0 && result < 0) || (operand1 < 0 && operand2 < 0 && result > 0))
+        {
+            SetBit(SREG, 1);
+        }
+        else
+        {
+            ClearBit(SREG, 1);
+        }
     }
-    else if (operand1 < 0 && operand2 < 0 && result > 0)
-    {
-        SetBit(SREG, 1);
+    else{
+        if ((operand1 < 0 && operand2 > 0 && result > 0) || (operand1 > 0 && operand2 < 0 && result < 0))
+        {
+            SetBit(SREG, 1);
+        }
+        else
+        {
+           ClearBit(SREG, 1);
+        }
     }
-    else
-    {
-        ClearBit(SREG, 1);
-    }
-    // print the flag if it got updated
-    if (prev != BitVal(SREG, 1))
-    {
-        printf("Overflow Flag Updated: %d\n", BitVal(SREG, 1));
-    }
+    printf("Overflow Flag Updated: %d\n", BitVal(SREG, 1));
+    
 }
 
 /**
  * @brief Updates the negative flag based on the result of an operation.
  * @param result The result of the operation.
  */
-void updateNegativeFlag(int result)
+void updateNegativeFlag(int8_t result)
 {
-    bool prev = BitVal(SREG, 2);
     if (result < 0)
     {
         SetBit(SREG, 2);
@@ -130,19 +131,17 @@ void updateNegativeFlag(int result)
     {
         ClearBit(SREG, 2);
     }
-    if (prev != BitVal(SREG, 2))
-    {
-        printf("Negative Flag Updated: %d\n", BitVal(SREG, 2));
-    }
+    printf("Negative Flag Updated: %d\n", BitVal(SREG, 2));
+
 }
 
 /**
  * @brief Updates the sign flag based on the result of an operation.
  * @param result The result of the operation.
  */
-void updateSignFlag(int result)
+void updateSignFlag(int8_t result)
 {
-    bool prev = BitVal(SREG, 3);
+
     if (result == 0)
     {
         SetBit(SREG, 3);
@@ -151,19 +150,17 @@ void updateSignFlag(int result)
     {
         ClearBit(SREG, 3);
     }
-    if (prev != BitVal(SREG, 3))
-    {
-        printf("Sign Flag Updated: %d\n", BitVal(SREG, 3));
-    }
+
+    printf("Sign Flag Updated: %d\n", BitVal(SREG, 3));
+    
 }
 
 /**
  * @brief Updates the zero flag based on the result of an operation.
  * @param result The result of the operation.
  */
-void updateZeroFlag(int result)
+void updateZeroFlag(int8_t result)
 {
-   bool prev = BitVal(SREG, 4);
     if (result == 0)
     {
         SetBit(SREG, 4);
@@ -172,10 +169,7 @@ void updateZeroFlag(int result)
     {
         ClearBit(SREG, 4);
     }
-    if (prev != BitVal(SREG, 4))
-    {
-        printf("Zero Flag Updated: %d\n", BitVal(SREG, 4));
-    }
+    printf("Zero Flag Updated: %d\n", BitVal(SREG, 4));
 }
 
 /**
@@ -215,13 +209,17 @@ void PrintStatusRegister()
  */
 void PrintAllRegisters()
 {
+    printf("Final State of Registers:\n");
+    printf("-------------------------------------------------- \n");
     printf("General Registers:\n");
     for (int i = 0; i < 64; i++)
     {
         if (generalRegisters[i] != 0)
         {
             printf("Register %d: %d\n", i, generalRegisters[i]);
+            printf("-------------------------------------------------- \n");
         }
     }
+    printf("-------------------------------------------------- \n");
     PrintStatusRegister();
 }
