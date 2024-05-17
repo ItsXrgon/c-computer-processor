@@ -109,14 +109,14 @@ void fetchPipeline()
 
         uint8_t opcode = GetOpcode(instruction);
         uint8_t operand1 = GetOperand1(instruction);
-        int8_t value2 = (GetValue2(instruction) >>2) & 0b111111;
+        int8_t value2 = GetValue2(instruction);
 
         printf("Fetched Instruction %d: Opcode:%d  Register:%d Reg/IMM:%d Type:%c\n",
                pipeline1.pcVal,
                opcode,
-                operand1,
-                value2,
-                GetOpcodeType(opcode));
+               operand1,
+               value2,
+               GetOpcodeType(opcode));
         IncrementPC();
     }
 }
