@@ -533,17 +533,17 @@ LDR R2 0
 
 ## Instructions
 
-| ID  | Instruction | Opcode | Output | Status Reg |
-| --- | ----------- | ------ | ------ | ---------- |
-| 0   | MOVI R0 5   | 3      | R0=5   | nth        |
-| 1   | MOVI R1 10  | 3      | R1=10  | nth        |
-| 2   | MOVI R2 20  | 3      | R2=20  | nth        |
-| 3   | STR R0 0    | 11     | nth    | nth        |
-| 4   | STR R1 1    | 11     | nth    | nth        |
-| 5   | STR R2 2    | 11     | nth    | nth        |
-| 6   | LDR R0 2    | 10     | R0=20  | nth        |
-| 7   | LDR R1 1    | 10     | R1=10  | nth        |
-| 8   | LDR R2 0    | 10     | R2=5   | nth        |
+| ID  | Instruction | Opcode | Output      | Status Reg |
+| --- | ----------- | ------ | ----------- | ---------- |
+| 0   | MOVI R0 5   | 3      | R0=5        | nth        |
+| 1   | MOVI R1 10  | 3      | R1=10       | nth        |
+| 2   | MOVI R2 20  | 3      | R2=20       | nth        |
+| 3   | STR R0 0    | 11     | Mem[0] = 5  | nth        |
+| 4   | STR R1 1    | 11     | Mem[1] = 10 | nth        |
+| 5   | STR R2 2    | 11     | Mem[2] = 20 | nth        |
+| 6   | LDR R0 2    | 10     | R0=20       | nth        |
+| 7   | LDR R1 1    | 10     | R1=10       | nth        |
+| 8   | LDR R2 0    | 10     | R2=5        | nth        |
 
 ## Registers
 
@@ -576,7 +576,6 @@ LDR R2 0
 | 8           | 10     | 2        | 0       | I    |
 
 # Test 1
-
 ## Instructions
 
 | ID  | Instruction | Opcode | Output         | Status Reg          |
