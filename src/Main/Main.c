@@ -143,11 +143,11 @@ void LoadProgram(char *file_name)
                 break;
         }
         // Print the opcode and operands
-        printf("Opcode: %04b, Operand1: %06b, Operand2: %06b\n", opcode_int, operand1_int, operand2_int&0b111111);
+        // printf("Opcode: %04b, Operand1: %06b, Operand2: %06b\n", opcode_int, operand1_int, operand2_int&0b111111);
 
         // Combine the opcode and operands into a 16-bit instruction
         uint16_t instruction = ((opcode_int & 0b1111) << 12) | ((operand1_int & 0b111111) << 6) | (operand2_int & 0b111111);
-        printf("Instruction: %016b\n", instruction);
+        // printf("Instruction: %016b\n", instruction);
         // Write the instruction to the instruction memory
         WriteInstructionMemory(address, instruction);
         address++;
@@ -174,7 +174,7 @@ int main()
 {
     ResetProcessor();
     // Only works with absolute path of the txt file
-    LoadProgram("/home/ashmxwy/Desktop/University/Work/CA/c-computer-processor/src/Test/ADD-Test.txt");
+    LoadProgram("/home/ashmxwy/Desktop/University/Work/CA/c-computer-processor/src/Test/SAL-Test.txt");
 
     /**
      * This function represents the main loop of the processor. It executes the pipeline stages
