@@ -575,29 +575,17 @@ LDR R2 0
 | 7           | 10     | 1        | 1       | I    |
 | 8           | 10     | 2        | 0       | I    |
 
-# Test 1
+# BR-Test
+MOVI R5 5
+MOVI R6 6
+BR R5 R6
+
 ## Instructions
 
 | ID  | Instruction | Opcode | Output         | Status Reg          |
 | --- | ----------- | ------ | -------------- | ------------------- |
-| 0   | MOVI R0 0   | 3      | R0 = 0         | nth                 |
-| 1   | MOVI R1 1   | 3      | R1 = 1         | nth                 |
-| 2   | MOVI R2 0   | 3      | R2 = 0         | nth                 |
-| 3   | MOVI R3 4   | 3      | R3 = 4         | nth                 |
-| 4   | MOVI R4 7   | 3      | R4 = 7         | nth                 |
-| 5   | MOVI R5 16  | 3      | R5 = 16        | nth                 |
-| 6   | MOVI R6 1   | 3      | R6 = 1         | nth                 |
-| 7   | BEQZ R3 5   | 4      | nth            | nth                 |
-| 8   | ADD R2 R1   | 0      | R2 = 0 + 1 = 1 | C = V = N = S = Z = |
-| 9   | SUB R3 R1   | 1      | R3 = 4 - 1 = 3 | V = N = S = Z =     |
-| 10  | SAL R6 1    | 8      | R6 = 2         | N = Z =             |
-| 11  | SAR R5 1    | 9      | R5 = 8         | N = Z =             |
-| 12  | STR R5 0    | 11     | Mem[0] = 8     | nth                 |
-| 13  | STR R6 1    | 11     | Mem[1] = 2     | nth                 |
-| 14  | STR R2 2    | 11     | Mem[2] = 1     | nth                 |
-| 15  | LDR R5 2    | 10     | R5 = 1         | nth                 |
-| 16  | LDR R6 1    | 10     | R6 = 2         | nth                 |
-| 17  | LDR R2 0    | 10     | R2 = 8         | nth                 |
+| 0   | MOVI R5 5   | 3      | R5=5           | nth                 |
+| 1   | MOVI R6 6   | 3      | R6=6           | nth                 |
 
 ## Registers
 
