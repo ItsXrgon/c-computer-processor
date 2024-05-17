@@ -125,25 +125,29 @@ void LoadProgram(char *file_name)
         int8_t operand2_int;
         switch (opcode_int)
         {
-        case 0:
-        case 1:
-        case 2:
-        case 6:
-        case 7:
-            operand2_int = atoi(operand2 + 1);
-            break;
-        case 3:
-        case 4:
-        case 5:
-        case 8:
-        case 9:
-        case 10:
-        case 11:
-            operand2_int = atoi(operand2);
-            break;
+            case 0:
+            case 1:
+            case 2:
+            case 6:
+            case 7:
+                operand2_int = atoi(operand2 + 1);
+                break;
+            case 3:
+            case 4:
+            case 5:
+            case 8:
+            case 9:
+            case 10:
+            case 11:
+                operand2_int = atoi(operand2);
+                break;
         }
+        // Print the opcode and operands
+        printf("Opcode: %04b, Operand1: %06b, Operand2: %06b\n", opcode_int, operand1_int, operand2_int&0b111111);
 
+        // Combine the opcode and operands into a 16-bit instruction
         uint16_t instruction = ((opcode_int & 0b1111) << 12) | ((operand1_int & 0b111111) << 6) | (operand2_int & 0b111111);
+        printf("Instruction: %016b\n", instruction);
         // Write the instruction to the instruction memory
         WriteInstructionMemory(address, instruction);
         address++;
@@ -170,7 +174,7 @@ int main()
 {
     ResetProcessor();
     // Only works with absolute path of the txt file
-    LoadProgram("/home/ashmxwy/Desktop/University/Work/CA/c-computer-processor/src/Test/MUL-Test.txt");
+    LoadProgram("/home/ashmxwy/Desktop/University/Work/CA/c-computer-processor/src/Test/ADD-Test.txt");
 
     /**
      * This function represents the main loop of the processor. It executes the pipeline stages
