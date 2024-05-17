@@ -65,7 +65,7 @@ void WriteInstructionMemory(uint16_t  address, uint16_t instruction);
  * @param address The address in the instruction memory from where the instruction will be read.
  * @return The instruction read from the instruction memory.
  */
-uint16_t ReadInstructionMemory(uint16_t address);
+int16_t ReadInstructionMemory(uint16_t address);
 
 /**
  * @brief Fetches the next instruction from the instruction memory and updates the pipeline.

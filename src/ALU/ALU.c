@@ -125,7 +125,7 @@ void EOR(uint8_t R1, uint8_t R2)
  */
 void BR(uint8_t R1, uint8_t R2)
 {
-    SetPC(ReadRegister(R1)  | ReadRegister(R2));
+    SetPC((ReadRegister(R1) << 8) | ReadRegister(R2));
     ResetPipeline();
 }
 
