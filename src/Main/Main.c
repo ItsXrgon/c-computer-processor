@@ -145,10 +145,8 @@ void LoadProgram(char *file_name)
                 operand2_int = atoi(operand2);
                 break;
         }
-        printf("opcode: %04b, operand1: %06b, operand2: %08b \n", ((opcode_int ) & 0b1111 ), ((operand1_int) & 0b111111), ((operand2_int) & 0b111111));
 
         uint16_t instruction = ((opcode_int & 0b1111) << 12) | ((operand1_int & 0b111111) << 6) | (operand2_int & 0b111111);
-        printf("Instruction: %016b \n", instruction);
         // Write the instruction to the instruction memory
         WriteInstructionMemory(address, instruction);
         address++;
