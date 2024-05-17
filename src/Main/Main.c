@@ -124,17 +124,17 @@ void LoadProgram(char *file_name)
         // Convert the opcode string to an integer
         int8_t opcode_int = incodeOpcode(opcode) ; // encodes the opcode string to a 4-bit integer
         // Convert the operand strings to integers
-        int8_t operand1_int = operand1[1] - '0';
+        int8_t operand1_int = atoi(operand1 + 1);
         int8_t operand2_int;
         switch (opcode_int)
         {
-                case 0:
-                case 1:
-                case 2:
-                case 6:
-                case 7:
-                    operand2_int = operand2[1] - '0';
-                    break;
+            case 0:
+            case 1:
+            case 2:
+            case 6:
+            case 7:
+                operand2_int = atoi(operand1 + 1);
+                break;
             case 3:
             case 4:
             case 5:
