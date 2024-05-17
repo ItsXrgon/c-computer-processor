@@ -292,14 +292,14 @@ SAL R5 0
 | 3   | MOVI R3 4   | 3      | R3 = 4              | nth                       |
 | 4   | MOVI R4 3   | 3      | R4 = 3              | nth                       |
 | 5   | MOVI R5 0   | 3      | R5 = 0              | nth                       |
-| 6   | SAL R0 1    | 6      | R0 = -8 << 1 = -16  | V = S = Z = C = 0 , N = 1 |
-| 7   | SAL R0 2    | 6      | R0 = -16 << 2 = -64 | V = S = Z = C = 0 , N = 1 |
-| 8   | SAL R1 1    | 6      | R1 = -10 << 1 = -20 | V = S = Z = C = 0 , N = 1 |
-| 9   | SAL R1 2    | 6      | R1 = -20 << 2 = -80 | V = S = Z = C = 0 , N = 1 |
-| 10  | SAL R2 2    | 6      | R2 = 15 << 2 = 60   | N = V = S = Z = C = 0     |
-| 11  | SAL R4 0    | 6      | R4 = 3 << 0 = 3     | N = V = S = Z = C = 0     |
-| 12  | SAL R5 2    | 6      | R5 = 0 << 2 = 0     | V = S = N = C = 0 , Z = 1 |
-| 13  | SAL R5 0    | 6      | R5 = 0 << 0 = 0     | V = S = N = C = 0 , Z = 1 |
+| 6   | SAL R0 1    | 8      | R0 = -8 << 1 = -16  | V = S = Z = C = 0 , N = 1 |
+| 7   | SAL R0 2    | 8      | R0 = -16 << 2 = -64 | V = S = Z = C = 0 , N = 1 |
+| 8   | SAL R1 1    | 8      | R1 = -10 << 1 = -20 | V = S = Z = C = 0 , N = 1 |
+| 9   | SAL R1 2    | 8      | R1 = -20 << 2 = -80 | V = S = Z = C = 0 , N = 1 |
+| 10  | SAL R2 2    | 8      | R2 = 15 << 2 = 60   | N = V = S = Z = C = 0     |
+| 11  | SAL R4 0    | 8      | R4 = 3 << 0 = 3     | N = V = S = Z = C = 0     |
+| 12  | SAL R5 2    | 8      | R5 = 0 << 2 = 0     | V = S = N = C = 0 , Z = 1 |
+| 13  | SAL R5 0    | 8      | R5 = 0 << 0 = 0     | V = S = N = C = 0 , Z = 1 |
 
 ## Registers
 
@@ -322,57 +322,105 @@ SAL R5 0
 | 3           | 3      | 3        | 4       | I    |
 | 4           | 3      | 4        | 3       | I    |
 | 5           | 3      | 5        | 0       | I    |
-| 6           | 6      | 0        | 1       | R    |
-| 7           | 6      | 0        | 2       | R    |
-| 8           | 6      | 1        | 1       | R    |
-| 9           | 6      | 1        | 2       | R    |
-| 10          | 6      | 2        | 2       | R    |
-| 11          | 6      | 4        | 0       | R    |
-| 12          | 6      | 5        | 2       | R    |
-| 13          | 6      | 5        | 0       | R    |
-
+| 6           | 8      | 0        | 1       | R    |
+| 7           | 8      | 0        | 2       | R    |
+| 8           | 8      | 1        | 1       | R    |
+| 9           | 8      | 1        | 2       | R    |
+| 10          | 8      | 2        | 2       | R    |
+| 11          | 8      | 4        | 0       | R    |
+| 12          | 8      | 5        | 2       | R    |
+| 13          | 8      | 5        | 0       | R    |
 
 # SAR Test
 
+MOVI R0 -8
+MOVI R1 -10
+MOVI R2 15
+MOVI R3 4
+MOVI R4 3
+MOVI R5 0
+SAR R0 1
+SAR R0 2
+SAR R1 1
+SAR R2 1  
+SAR R3 2  
+SAR R4 0  
+SAR R5 2  
+SAR R5 0  
+SAR R4 2
+
 ## Instructions
 
-| ID  | Instruction | Opcode | Output | Status Reg | Notes |
-| --- | ----------- | ------ | ------ | ---------- | ----- |
+| ID  | Instruction | Opcode | Output             | Status Reg               |
+| --- | ----------- | ------ | ------------------ | ------------------------ |
+| 0   | MOVI R0 -8  | 3      | R0 = -8            | nth                      |
+| 1   | MOVI R1 -10 | 3      | R1 = -10           | nth                      |
+| 2   | MOVI R2 15  | 3      | R2 = 15            | nth                      |
+| 3   | MOVI R3 4   | 3      | R3 = 4             | nth                      |
+| 4   | MOVI R4 3   | 3      | R4 = 3             | nth                      |
+| 5   | MOVI R5 0   | 3      | R5 = 0             | nth                      |
+| 6   | SAR R0 1    | 9      | R0 = -8 >> 1 = -4  | V = S = Z = C = 0, N = 1 |
+| 7   | SAR R0 2    | 9      | R0 = -4 >> 2 = -1  | V = S = Z = C = 0, N = 1 |
+| 8   | SAR R1 1    | 9      | R1 = -10 >> 1 = -5 | V = S = Z = C = 0, N = 1 |
+| 9   | SAR R2 1    | 9      | R2 = 15 >> 1 = 7   | V = S = Z = N = C = 0    |
+| 10  | SAR R3 2    | 9      | R3 = 4 >> 2 = 1    | V = S = Z = N = C = 0    |
+| 11  | SAR R4 0    | 9      | R4 = 3 >> 0 = 3    | V = S = Z = N = C = 0    |
+| 12  | SAR R5 2    | 9      | R5 = 0 >> 2 = 0    | V = S = Z = N = C = 0    |
+| 13  | SAR R5 0    | 9      | R5 = 0 >> 0 = 0    | V = S = Z = N = C = 0    |
+| 14  | SAR R4 2    | 9      | R4 = 3 >> 2 = 0    | V = S = Z = N = C = 0    |
 
 ## Registers
 
 | Register | Value |
 | -------- | ----- |
-
-## Data Memory
-
-| Address | Data |
-| ------- | ---- |
+| 0        | -1    |
+| 1        | -5    |
+| 2        | 7     |
+| 3        | 1     |
+| 4        | 0     |
+| 5        | 0     |
 
 ## Instruction Memory
 
 | Instruction | Opcode | Register | Reg/IMM | Type |
 | ----------- | ------ | -------- | ------- | ---- |
+| 0           | 3      | 0        | -8      | I    |
+| 1           | 3      | 1        | -10     | I    |
+| 2           | 3      | 2        | 15      | I    |
+| 3           | 3      | 3        | 4       | I    |
+| 4           | 3      | 4        | 3       | I    |
+| 5           | 3      | 5        | 0       | I    |
+| 6           | 9      | 0        | 1       | R    |
+| 7           | 9      | 0        | 2       | R    |
+| 8           | 9      | 1        | 1       | R    |
+| 9           | 9      | 2        | 1       | R    |
+| 10          | 9      | 3        | 2       | R    |
+| 11          | 9      | 4        | 0       | R    |
+| 12          | 9      | 5        | 2       | R    |
+| 13          | 9      | 5        | 0       | R    |
+| 14          | 9      | 4        | 2       | R    |
 
 # EOR Test
 
 ## Instructions
 
-| ID  | Instruction | Opcode | Output | Status Reg | Notes |
-| --- | ----------- | ------ | ------ | ---------- | ----- |
-| 0   | MOVI R0 0   | 3      | R0=0   |            |       |
-| 1   | MOVI R1 1   | 3      | R1=1   |            |       |
-| 2   | MOVI R2 12  | 3      | R2=12  |            |       |
-| 3   | MOVI R3 4   | 3      | R3=4   |            |       |
-| 4   | MOVI R4 7   | 3      | R4=7   |            |       |
-| 5   | MOVI R5 16  | 3      | R5=16  |            |       |
-| 6   | MOVI R6 3   | 3      | R6=3   |            |       |
-| 7   | EOR R0 R1   | 5      | R0=1   |            |       |
-| 8   | EOR R1 R2   | 6      | R1=13  |            |       |
-| 9   | EOR R2 R3   | 7      | R2=8   |            |       |
-| 10  | EOR R3 R4   | 8      | R3=3   |            |       |
-| 11  | EOR R4 R5   | 9      | R4=23  |            |       |
-| 12  | EOR R5 R6   | 10     | R5=19  |            |       |
+| ID  | Instruction | Opcode | Output | Status Reg            |
+| --- | ----------- | ------ | ------ | --------------------- |
+| 0   | MOVI R0 0   | 3      | R0=0   | nth                   |
+| 1   | MOVI R1 1   | 3      | R1=1   | nth                   |
+| 1   | MOVI R1 1   | 3      | R1=1   | nth                   |
+| 2   | MOVI R2 12  | 3      | R2=12  | nth                   |
+| 3   | MOVI R3 4   | 3      | R3=4   | nth                   |
+| 4   | MOVI R4 7   | 3      | R4=7   | nth                   |
+| 5   | MOVI R5 16  | 3      | R5=16  | nth                   |
+| 6   | MOVI R6 3   | 3      | R6=3   | nth                   |
+| 7   | EOR R0 R1   | 5      | R0=1   | V = S = Z = N = C = 0 |
+| 8   | EOR R1 R2   | 6      | R1=13  | V = S = Z = N = C = 0 |
+| 9   | EOR R2 R3   | 7      | R2=8   | V = S = Z = N = C = 0 |
+| 9   | EOR R2 R3   | 7      | R2=8   | V = S = Z = N = C = 0 |
+| 10  | EOR R3 R4   | 8      | R3=3   | V = S = Z = N = C = 0 |
+| 11  | EOR R4 R5   | 9      | R4=23  | V = S = Z = N = C = 0 |
+| 12  | EOR R5 R6   | 10     | R5=19  | V = S = Z = N = C = 0 |
 
 ## Registers
 
