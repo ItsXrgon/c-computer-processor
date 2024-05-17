@@ -601,13 +601,16 @@ LDR R2 0
 | 2           | 12     | 5        | 6       | I    |
 
 # BEQZ Test
+
 ## Instructions
+
 | ID  | Instruction | Opcode | Output | Status Reg            |
 | --- | ----------- | ------ | ------ | --------------------- |
 | 0   | MOVI R3 0   | 3      | R3=0   | nth                   |
 | 1   | BEQZ R3 5   | 13     | PC = 7 | V = S = Z = N = C = 0 |
 
 ## Registers
+
 | Register | Value |
 | -------- | ----- |
 | 3        | 0     |
@@ -620,6 +623,7 @@ LDR R2 0
 | 1           | 13     | 3        | 5       | I    |
 
 # ALL Tests
+
 MOVI R0 10
 MOVI R9 8
 MOVI R29 10
@@ -637,29 +641,28 @@ SAR R4 R6
 LDR R5 2
 LDR R6 1
 LDR R2 0
+
 ## Instructions
 
-| ID  | Instruction | Opcode | Output | Status Reg            |
-| --- | ----------- | ------ | ------ | --------------------- |
-| 0   | MOVI R0 10  | 3      | R0=10  | nth                   |
-| 1   | MOVI R9 8   | 3      | R9=8   | nth                   |
-| 2   | MOVI R29 10 | 3      | R29=10 | nth                   |
-| 3   | MOVI R29 4  | 3      | R29=4  | nth                   |
-| 4   | MOVI R39 3  | 3      | R39=3  | nth                   |
-| 5   | MOVI R49 5  | 3      | R49=5  | nth                   |
-| 6   | MOVI R59 6  | 3      | R59=6  | nth                   |
-| 7   | MOVI R60 2  | 3      | R60=2  | nth                   |
-| 8   | MUL R0 R60  | 2      | R0=20  | V = S = Z = N = C = 0 |
-| 9   | ADD R9 R60  | 0      | R9=10  | V = S = Z = N = C = 0 |
+| ID  | Instruction | Opcode | Output   | Status Reg            |
+| --- | ----------- | ------ | -------- | --------------------- |
+| 0   | MOVI R0 10  | 3      | R0=10    | nth                   |
+| 1   | MOVI R9 8   | 3      | R9=8     | nth                   |
+| 2   | MOVI R29 10 | 3      | R29=10   | nth                   |
+| 3   | MOVI R29 4  | 3      | R29=4    | nth                   |
+| 4   | MOVI R39 3  | 3      | R39=3    | nth                   |
+| 5   | MOVI R49 5  | 3      | R49=5    | nth                   |
+| 6   | MOVI R59 6  | 3      | R59=6    | nth                   |
+| 7   | MOVI R60 2  | 3      | R60=2    | nth                   |
+| 8   | MUL R0 R60  | 2      | R0=20    | V = S = Z = N = C = 0 |
+| 9   | ADD R9 R60  | 0      | R9=10    | V = S = Z = N = C = 0 |
 | 10  | STR R59 0   | 11     | Mem[0]=6 | nth                   |
 | 11  | STR R60 1   | 11     | Mem[1]=2 | nth                   |
-| 12  | SAL R49 2   | 8      | R49=20  | V = S = Z = N = C = 0 |
-| 13  | SAR R4 R6   | 9      | R4=0    | V = S = Z = N = C = 0 |
-| 14  | LDR R5 2    | 10     | R5=6    | nth                   |
-| 15  | LDR R6 1    | 10     | R6=2    | nth                   |
-| 16  | LDR R2 0    | 10     | R2=6    | nth                   |
-
-
+| 12  | SAL R49 2   | 8      | R49=20   | V = S = Z = N = C = 0 |
+| 13  | SAR R4 R6   | 9      | R4=0     | V = S = Z = N = C = 0 |
+| 14  | LDR R5 2    | 10     | R5=6     | nth                   |
+| 15  | LDR R6 1    | 10     | R6=2     | nth                   |
+| 16  | LDR R2 0    | 10     | R2=6     | nth                   |
 
 ## Registers
 
@@ -677,15 +680,12 @@ LDR R2 0
 | 6        | 2     |
 | 2        | 6     |
 
-
 ## Data Memory
 
 | Address | Value |
 | ------- | ----- |
 | 0       | 6     |
 | 1       | 2     |
-
-
 
 ## Instruction Memory
 
@@ -708,7 +708,3 @@ LDR R2 0
 | 14          | 10     | 5        | 2       | R    |
 | 15          | 10     | 6        | 1       | R    |
 | 16          | 10     | 2        | 0       | R    |
-
-
-
-
