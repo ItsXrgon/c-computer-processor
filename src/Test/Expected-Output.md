@@ -1,54 +1,80 @@
 # MOVI Test
 
+MOVI R0 0
+MOVI R10 10
+MOVI R20 20
+MOVI R30 30
+MOVI R40 31
+MOVI R50 22
+MOVI R60 -2
+MOVI R63 -3
+MOVI R2 -31
+MOVI R3 -20
+MOVI R4 -10
+MOVI R5 -5
+MOVI R6 -8
+MOVI R7 31
+MOVI R8 30
+
 ## Instructions
 
-| ID  | Instruction | Opcode | Output   | Status Reg | Notes                    |
-| --- | ----------- | ------ | -------- | ---------- | ------------------------ |
-| 0   | MOVI R0 0   | 3      | R0 = 0   | nth        |                          |
-| 1   | MOVI R1 2   | 3      | R1 = 2   | nth        |                          |
-| 2   | MOVI R2 4   | 3      | R2 = 4   | nth        |                          |
-| 3   | MOVI R3 -2  | 3      | R3 = -2  | nth        | # doesn't input negative |
-| 4   | MOVI R4 40  | 3      | R4 = 40  | nth        | # R4 = -24               |
-| 5   | MOVI R5 200 | 3      | R5 = 200 | nth        |                          |
-| 6   | MOVI R6 20  | 3      | R6 = 20  | nth        |                          |
-| 7   | MOVI R7 -1  | 3      | R7 = -1  | nth        | # abort here             |
-| 8   | MOVI R8 -5  | 3      | R8 = -5  | nth        |                          |
-| 9   | MOVI R9 -5  | 3      | R9 = -5  | nth        |                          |
+| ID  | Instruction | Opcode | Output   | Status Reg |
+| --- | ----------- | ------ | -------- | ---------- |
+| 0   | MOVI R0 0   | 3      | R0 = 0   | nth        |
+| 1   | MOVI R10 10 | 3      | R10 = 10 | nth        |
+| 2   | MOVI R20 20 | 3      | R20 = 20 | nth        |
+| 3   | MOVI R30 30 | 3      | R30 = 30 | nth        |
+| 4   | MOVI R40 31 | 3      | R40 = 31 | nth        |
+| 5   | MOVI R50 22 | 3      | R50 = 22 | nth        |
+| 6   | MOVI R60 -2 | 3      | R60 = -2 | nth        |
+| 7   | MOVI R63 -3 | 3      | R63 = -3 | nth        |
+| 8   | MOVI R2 -4  | 3      | R2 = -31 | nth        |
+| 9   | MOVI R3 -20 | 3      | R3 = -20 | nth        |
+| 10  | MOVI R4 -10 | 3      | R4 = -10 | nth        |
+| 11  | MOVI R5 -5  | 3      | R5 = -5  | nth        |
+| 12  | MOVI R6 -8  | 3      | R6 = -8  | nth        |
+| 13  | MOVI R7 31  | 3      | R7 = 31  | nth        |
+| 14  | MOVI R8 30  | 3      | R8 = 30  | nth        |
 
 ## Registers
 
 | Register | Value |
 | -------- | ----- |
 | 0        | 0     |
-| 1        | 2     |
-| 2        | 4     |
-| 3        | -2    |
-| 4        | 40    |
-| 5        | 200   |
-| 6        | 20    |
-| 7        | -1    |
-| 8        | -5    |
-| 9        | -5    |
-
-## Data Memory
-
-| Address | Data |
-| ------- | ---- |
+| 10       | 10    |
+| 20       | 20    |
+| 30       | 30    |
+| 40       | 31    |
+| 50       | 22    |
+| 60       | -2    |
+| 63       | -3    |
+| 2        | -31   |
+| 3        | -20   |
+| 4        | -10   |
+| 5        | -5    |
+| 6        | -8    |
+| 7        | 31    |
+| 8        | 30    |
 
 ## Instruction Memory
 
 | Instruction | Opcode | Register | Reg/IMM | Type |
 | ----------- | ------ | -------- | ------- | ---- |
 | 0           | 3      | 0        | 0       | I    |
-| 1           | 3      | 1        | 2       | I    |
-| 2           | 3      | 2        | 4       | I    |
-| 3           | 3      | 3        | -2      | I    |
-| 4           | 3      | 4        | 40      | I    |
-| 5           | 3      | 5        | 200     | I    |
-| 6           | 3      | 6        | 20      | I    |
-| 7           | 3      | 7        | -1      | I    |
-| 8           | 3      | 8        | -5      | I    |
-| 9           | 3      | 9        | -5      | I    |
+| 1           | 3      | 10       | 10      | I    |
+| 2           | 3      | 20       | 20      | I    |
+| 3           | 3      | 30       | 30      | I    |
+| 4           | 3      | 40       | 31      | I    |
+| 5           | 3      | 50       | 22      | I    |
+| 6           | 3      | 60       | -2      | I    |
+| 7           | 3      | 63       | -3      | I    |
+| 8           | 3      | 2        | -4      | I    |
+| 9           | 3      | 3        | -20     | I    |
+| 10          | 3      | 4        | -10     | I    |
+| 11          | 3      | 5        | -5      | I    |
+| 12          | 3      | 6        | -8      | I    |
+| 13          | 3      | 7        | 31      | I    |
+| 14          | 3      | 8        | 30      | I    |
 
 # ADD Test
 
@@ -388,7 +414,6 @@ ANDI R5 15
 | 4        | 6     |
 | 5        | 0     |
 | 6        | 3     |
-
 
 ## Data Memory
 

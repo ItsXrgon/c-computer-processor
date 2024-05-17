@@ -107,9 +107,9 @@ void LoadProgram(char *file_name)
     while (!feof(file))
     {
 
-        char opcode[4];
-        char operand1[3];
-        char operand2[3];
+        char opcode[5];
+        char operand1[4];
+        char operand2[4];
         /**
          * Reads three strings from the file using the specified format and stores them in the given variables.
          *
@@ -122,19 +122,19 @@ void LoadProgram(char *file_name)
          */
         fscanf(file, "%4s %3s %3s", opcode, operand1, operand2);
         // Convert the opcode string to an integer
-        int8_t opcode_int = incodeOpcode(opcode) ; // encodes the opcode string to a 4-bit integer
+        uint8_t opcode_int = incodeOpcode(opcode) ; // encodes the opcode string to a 4-bit integer
         // Convert the operand strings to integers
-        int8_t operand1_int = operand1[1] - '0';
+        uint8_t operand1_int = atoi(operand1 + 1);
         int8_t operand2_int;
         switch (opcode_int)
         {
-                case 0:
-                case 1:
-                case 2:
-                case 6:
-                case 7:
-                    operand2_int = operand2[1] - '0';
-                    break;
+            case 0:
+            case 1:
+            case 2:
+            case 6:
+            case 7:
+                operand2_int = atoi(operand2 + 1);
+                break;
             case 3:
             case 4:
             case 5:
@@ -145,7 +145,13 @@ void LoadProgram(char *file_name)
                 operand2_int = atoi(operand2);
                 break;
         }
-        short int instruction = (opcode_int << 12) | (operand1_int << 6) | operand2_int;
+        // Print the opcode and operands
+        printf("Opcode: %04b, Operand1: %06b, Operand2: %06b\n", opcode_int, operand1_int, operand2_int&0b111111);
+
+        // Combine the opcode and operands into a 16-bit instruction
+        uint16_t instruction = ((opcode_int & 0b1111) << 12) | ((operand1_int & 0b111111) << 6) | (operand2_int & 0b111111);
+        printf("Instruction: %016b\n", instruction);
+        // Write the instruction to the instruction memory
         WriteInstructionMemory(address, instruction);
         address++;
     }
@@ -171,7 +177,7 @@ int main()
 {
     ResetProcessor();
     // Only works with absolute path of the txt file
-    LoadProgram("/home/ashmxwy/Desktop/University/Work/CA/c-computer-processor/src/Test/MOVI-Test.txt");
+    LoadProgram("/home/youssef/Documents/Guc/CA/project/c-computer-processor/src/Test/ADD-Test.txt");
 
     /**
      * This function represents the main loop of the processor. It executes the pipeline stages

@@ -43,18 +43,18 @@ void ResetPipeline() {
 
 
 
-uint8_t GetOpcode(uint16_t instruction)
+uint8_t GetOpcode(int16_t instruction)
 {
-    return (instruction >> 12) & 0xF;
+    return (instruction >> 12) & 0b1111;
 }
-uint8_t GetOperand1(uint16_t instruction)
+uint8_t GetOperand1(int16_t instruction)
 {
-    return (instruction >> 6) & 0x3F;
+    return (instruction >> 6) & 0b111111;
 }
 
-int8_t GetValue2(uint16_t instruction)
+int8_t GetValue2(int16_t instruction)
 {
-    return instruction & 0x3F;
+    return instruction & 0b111111;
 }
 
 char GetOpcodeType(uint8_t opcode)
@@ -107,12 +107,16 @@ void fetchPipeline()
         pipeline1.valid = 1;
         pipeline1.pcVal = GetPC();
 
+        uint8_t opcode = GetOpcode(instruction);
+        uint8_t operand1 = GetOperand1(instruction);
+        int8_t value2 = GetValue2(instruction);
+
         printf("Fetched Instruction %d: Opcode:%d  Register:%d Reg/IMM:%d Type:%c\n",
                pipeline1.pcVal,
-               GetOpcode(instruction),
-                GetOperand1(instruction),
-                GetValue2(instruction),
-                GetOpcodeType(GetOpcode(instruction)));
+               opcode,
+               operand1,
+               value2,
+               GetOpcodeType(opcode));
         IncrementPC();
     }
 }
@@ -257,12 +261,15 @@ void PrintAllInstructionMemory()
     {
         if (instruction_memory[i] != -1)
         {
+            uint8_t opcode = GetOpcode(instruction_memory[i]);
+            uint8_t operand1 = GetOperand1(instruction_memory[i]);
+            int8_t value2 = GetValue2(instruction_memory[i]);
             printf("Instruction %d: Opcode:%d  Register:%d  Reg/IMM:%d  Type:%c\n",
                    i,
-                   GetOpcode(instruction_memory[i]),
-                   GetOperand1(instruction_memory[i]),
-                   GetValue2(instruction_memory[i]),
-                   GetOpcodeType(GetOpcode(instruction_memory[i])));
+                   opcode,
+                   operand1,
+                   value2,
+                   GetOpcodeType(opcode));
             printf("-------------------------------------------------- \n");
         }
     }

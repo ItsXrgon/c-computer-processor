@@ -29,7 +29,7 @@ typedef struct {
  * @brief Represents the fetched instruction before decoding.
  */
 typedef struct {
-    short int instruction;    /**< The fetched instruction. */
+    int16_t instruction;    /**< The fetched instruction. */
     bool valid;               /**< Indicates if the fetched instruction is valid. */
     uint8_t pcVal;                /**< The program counter value. */
 } FetchedInstruction;
