@@ -120,7 +120,7 @@ void LoadProgram(char *file_name)
          *
          * @return The number of items successfully read and assigned, or EOF if an error occurred.
          */
-        fscanf(file, "%4s %s %s", opcode, operand1, operand2);
+        fscanf(file, "%4s %3s %3s", opcode, operand1, operand2);
         // Convert the opcode string to an integer
         int8_t opcode_int = incodeOpcode(opcode) ; // encodes the opcode string to a 4-bit integer
         // Convert the operand strings to integers
