@@ -10,20 +10,17 @@
 #include <stdlib.h>
 #include <string.h>
 
-int MaxClockCycles;                          // Global variable in main.c gets init in load program function after the while loop
-int clockcycles = 1;                         // global var to track the current clock cycle for the program
+int MaxClockCycles;                      // Global variable in main.c gets init in load program function after the while loop
+int clockcycles = 1;                     // global var to track the current clock cycle for the program
 extern int16_t instruction_memory[1024]; /**< External array representing the instruction memory. */
-extern FetchedInstruction pipeline1;              /**< External variable representing the first pipeline stage. */
-extern PipelineStage pipeline2;              /**< External variable representing the second pipeline stage. */
-extern PipelineStage pipeline3;              /**< External variable representing the third pipeline stage. */
-extern PipelineStage pipeline4;              /**< External variable representing the fourth pipeline stage. */
-extern int8_t data_memory[2048];     /**< External array representing the data memory. */
-extern int8_t generalRegisters[64];                   /**< External array representing the registers. */
-extern uint8_t SREG;                          /**< External array representing the status register. SREG[0] = C, SREG[1] = V, SREG[2] = N, SREG[3] = S, SREG[4] = Z */
-extern uint16_t pc;                               /**< External variable representing the program counter. */
-
-
-
+extern FetchedInstruction pipeline1;     /**< External variable representing the first pipeline stage. */
+extern PipelineStage pipeline2;          /**< External variable representing the second pipeline stage. */
+extern PipelineStage pipeline3;          /**< External variable representing the third pipeline stage. */
+extern PipelineStage pipeline4;          /**< External variable representing the fourth pipeline stage. */
+extern int8_t data_memory[2048];         /**< External array representing the data memory. */
+extern int8_t generalRegisters[64];      /**< External array representing the registers. */
+extern uint8_t SREG;                     /**< External array representing the status register. SREG[0] = C, SREG[1] = V, SREG[2] = N, SREG[3] = S, SREG[4] = Z */
+extern uint16_t pc;                      /**< External variable representing the program counter. */
 
 // Function to convert opcode string to corresponding opcode value
 uint8_t incodeOpcode(char *opcode)
@@ -122,7 +119,7 @@ void LoadProgram(char *file_name)
          */
         fscanf(file, "%4s %3s %3s", opcode, operand1, operand2);
         // Convert the opcode string to an integer
-        uint8_t opcode_int = incodeOpcode(opcode) ; // encodes the opcode string to a 4-bit integer
+        uint8_t opcode_int = incodeOpcode(opcode); // encodes the opcode string to a 4-bit integer
         // Convert the operand strings to integers
         uint8_t operand1_int = atoi(operand1 + 1);
         int8_t operand2_int;
@@ -146,11 +143,11 @@ void LoadProgram(char *file_name)
                 break;
         }
         // Print the opcode and operands
-        printf("Opcode: %04b, Operand1: %06b, Operand2: %06b\n", opcode_int, operand1_int, operand2_int&0b111111);
+        // printf("Opcode: %04b, Operand1: %06b, Operand2: %06b\n", opcode_int, operand1_int, operand2_int&0b111111);
 
         // Combine the opcode and operands into a 16-bit instruction
         uint16_t instruction = ((opcode_int & 0b1111) << 12) | ((operand1_int & 0b111111) << 6) | (operand2_int & 0b111111);
-        printf("Instruction: %016b\n", instruction);
+        // printf("Instruction: %016b\n", instruction);
         // Write the instruction to the instruction memory
         WriteInstructionMemory(address, instruction);
         address++;
@@ -177,7 +174,7 @@ int main()
 {
     ResetProcessor();
     // Only works with absolute path of the txt file
-    LoadProgram("/home/youssef/Documents/Guc/CA/project/c-computer-processor/src/Test/ADD-Test.txt");
+    LoadProgram("/home/ashmxwy/Desktop/University/Work/CA/c-computer-processor/src/Test/LDR-STR-Test.txt");
 
     /**
      * This function represents the main loop of the processor. It executes the pipeline stages
@@ -195,9 +192,11 @@ int main()
      */
     printf("Cycle: %i \n", clockcycles);
     fetchPipeline();
-    while (pipeline1.valid == true || pipeline2.valid == true || pipeline3.valid == true || pipeline4.valid == true) {
-        
-        if( clockcycles !=1){
+    while (pipeline1.valid == true || pipeline2.valid == true || pipeline3.valid == true || pipeline4.valid == true)
+    {
+
+        if (clockcycles != 1)
+        {
             printf("Cycle: %i \n", clockcycles);
             fetchPipeline();
         }
@@ -213,7 +212,6 @@ int main()
      * Prints the final state of registers and memory.
      * Calls the functions to print the final state of registers, data memory, and instruction memory.
      */
-   
 
     PrintAllRegisters();
     PrintAllDataMemory();
