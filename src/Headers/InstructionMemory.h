@@ -25,7 +25,7 @@ void ResetPipeline();
  * @param instruction The instruction to get the opcode from.
  * @return The opcode of the instruction.
 */
-uint8_t GetOpcode(uint16_t instruction);
+uint8_t GetOpcode(int16_t instruction);
 
 /**
  * @brief get the first operand of the instruction
@@ -33,7 +33,7 @@ uint8_t GetOpcode(uint16_t instruction);
  * @param instruction The instruction to get the first operand from.
  * @return The first operand of the instruction.
 */
-uint8_t GetOperand1(uint16_t instruction);
+uint8_t GetOperand1(int16_t instruction);
 
 /**
  * @brief get the second operand of the instruction
@@ -41,7 +41,7 @@ uint8_t GetOperand1(uint16_t instruction);
  * @param instruction The instruction to get the second operand/Immediate value from.
  * @return The second operand/Immediate value of the instruction.
 */
-int8_t GetValue2(uint16_t instruction);
+int8_t GetValue2(int16_t instruction);
 
 /**
  * @brief get the type of the instruction

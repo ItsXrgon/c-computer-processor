@@ -214,11 +214,10 @@ void PrintAllRegisters()
     printf("General Registers:\n");
     for (int i = 0; i < 64; i++)
     {
-        if (generalRegisters[i] != 0)
-        {
+    
             printf("Register %d: %d\n", i, generalRegisters[i]);
             printf("-------------------------------------------------- \n");
-        }
+    
     }
     printf("-------------------------------------------------- \n");
     PrintStatusRegister();
