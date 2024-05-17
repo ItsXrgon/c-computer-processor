@@ -577,10 +577,6 @@ LDR R2 0
 
 # BR-Test
 
-MOVI R5 2
-MOVI R6 3
-BR R5 R6
-
 ## Instructions
 
 | ID  | Instruction | Opcode | Output | Status Reg            |
@@ -603,6 +599,26 @@ BR R5 R6
 | 0           | 3      | 5        | 2       | I    |
 | 1           | 3      | 6        | 3       | I    |
 | 2           | 12     | 5        | 6       | I    |
+
+# BEQZ Test
+## Instructions
+| ID  | Instruction | Opcode | Output | Status Reg            |
+| --- | ----------- | ------ | ------ | --------------------- |
+| 0   | MOVI R3 0   | 3      | R3=0   | nth                   |
+| 1   | BEQZ R3 5   | 13     | PC = 7 | V = S = Z = N = C = 0 |
+
+## Registers
+| Register | Value |
+| -------- | ----- |
+| 3        | 0     |
+
+## Instruction Memory
+
+| Instruction | Opcode | Register | Reg/IMM | Type |
+| ----------- | ------ | -------- | ------- | ---- |
+| 0           | 3      | 3        | 0       | I    |
+| 1           | 13     | 3        | 5       | I    |
+
 # Test 2
 
 ## Instructions
@@ -777,72 +793,3 @@ smo please format into table
 | 14          | 10     | 5        | 2       | I    |
 | 15          | 10     | 6        | 1       | I    |
 | 16          | 10     | 2        | 0       | I    |
-
-# Test 5
-
-## Instructions
-
-| ID  | Instruction | Opcode | Output          | Status Reg          |
-| --- | ----------- | ------ | --------------- | ------------------- |
-| 0   | MOVI R0 0   | 3      | R0 = 0          | nth                 |
-| 1   | MOVI R1 1   | 3      | R1 = 1          | nth                 |
-| 2   | MOVI R2 0   | 3      | R2 = 0          | nth                 |
-| 3   | MOVI R3 0   | 3      | R3 = 0          | nth                 |
-| 4   | MOVI R4 7   | 3      | R4 = 7          | nth                 |
-| 5   | MOVI R5 16  | 3      | R5 = 16         | nth                 |
-| 6   | MOVI R6 1   | 3      | R6 = 1          | nth                 |
-| 7   | BEQZ R3 5   | 4      | nth             | nth                 |
-| 8   | ADD R2 R1   | 0      | R2 = 0 + 1 = 1  | C = V = N = S = Z = |
-| 9   | SUB R3 R1   | 1      | R3 = 0 - 1 = -1 | V = N = S = Z =     |
-| 10  | SAL R6 1    | 8      | R6 = 2          | N = Z =             |
-| 11  | SAR R5 1    | 9      | R5 = 8          | N = Z =             |
-| 12  | STR R5 0    | 11     | Mem[0] = 8      | nth                 |
-| 13  | STR R6 1    | 11     | Mem[1] = 2      | nth                 |
-| 14  | STR R2 2    | 11     | Mem[2] = 1      | nth                 |
-| 15  | LDR R5 2    | 10     | R5 = 1          | nth                 |
-| 16  | LDR R6 1    | 10     | R6 = 2          | nth                 |
-| 17  | LDR R2 0    | 10     | R2 = 8          | nth                 |
-
-smo please format into table
-
-## Registers
-
-| Register | Value |
-| -------- | ----- |
-| 1        | 1     |
-| 2        | 8     |
-| 3        | -1    |
-| 4        | 7     |
-| 5        | 1     |
-| 6        | 2     |
-
-## Data Memory
-
-| Address | Data |
-| ------- | ---- |
-| 0       | 8    |
-| 1       | 2    |
-| 2       | 1    |
-
-## Instruction Memory
-
-| Instruction | Opcode | Register | Reg/IMM | Type |
-| ----------- | ------ | -------- | ------- | ---- |
-| 0           | 3      | 0        | 0       | I    |
-| 1           | 3      | 1        | 1       | I    |
-| 2           | 3      | 2        | 0       | I    |
-| 3           | 3      | 3        | 0       | I    |
-| 4           | 3      | 4        | 7       | I    |
-| 5           | 3      | 5        | 16      | I    |
-| 6           | 3      | 6        | 1       | I    |
-| 7           | 4      | 3        | 5       | I    |
-| 8           | 0      | 2        | 1       | R    |
-| 9           | 1      | 3        | 1       | R    |
-| 10          | 8      | 6        | 1       | I    |
-| 11          | 9      | 5        | 1       | I    |
-| 12          | 11     | 5        | 0       | I    |
-| 13          | 11     | 6        | 1       | I    |
-| 14          | 11     | 2        | 2       | I    |
-| 15          | 10     | 5        | 2       | I    |
-| 16          | 10     | 6        | 1       | I    |
-| 17          | 10     | 2        | 0       | I    |
