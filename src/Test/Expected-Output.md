@@ -576,59 +576,33 @@ LDR R2 0
 | 8           | 10     | 2        | 0       | I    |
 
 # BR-Test
-MOVI R5 5
-MOVI R6 6
+
+MOVI R5 2
+MOVI R6 3
 BR R5 R6
 
 ## Instructions
 
-| ID  | Instruction | Opcode | Output         | Status Reg          |
-| --- | ----------- | ------ | -------------- | ------------------- |
-| 0   | MOVI R5 5   | 3      | R5=5           | nth                 |
-| 1   | MOVI R6 6   | 3      | R6=6           | nth                 |
+| ID  | Instruction | Opcode | Output | Status Reg            |
+| --- | ----------- | ------ | ------ | --------------------- |
+| 0   | MOVI R5 2   | 3      | R5=2   | nth                   |
+| 1   | MOVI R6 3   | 3      | R6=3   | nth                   |
+| 2   | BR R5 R6    | 12     | PC = 3 | V = S = N = C = Z = 0 |
 
 ## Registers
 
 | Register | Value |
 | -------- | ----- |
-| 1        | 1     |
-| 2        | 8     |
-| 3        | -3    |
-| 4        | 7     |
-| 5        | 1     |
-| 6        | 2     |
-
-## Data Memory
-
-| Address | Data |
-| ------- | ---- |
-| 0       | 8    |
-| 1       | 2    |
-| 2       | 1    |
+| 5        | 2     |
+| 6        | 3     |
 
 ## Instruction Memory
 
 | Instruction | Opcode | Register | Reg/IMM | Type |
 | ----------- | ------ | -------- | ------- | ---- |
-| 0           | 3      | 0        | 0       | I    |
-| 1           | 3      | 1        | 1       | I    |
-| 2           | 3      | 2        | 0       | I    |
-| 3           | 3      | 3        | 4       | I    |
-| 4           | 3      | 4        | 7       | I    |
-| 5           | 3      | 5        | 16      | I    |
-| 6           | 3      | 6        | 1       | I    |
-| 7           | 4      | 3        | 5       | I    |
-| 8           | 0      | 2        | 1       | R    |
-| 9           | 1      | 3        | 1       | R    |
-| 10          | 8      | 6        | 1       | I    |
-| 11          | 9      | 5        | 1       | I    |
-| 12          | 11     | 5        | 0       | I    |
-| 13          | 11     | 6        | 1       | I    |
-| 14          | 11     | 2        | 2       | I    |
-| 15          | 10     | 5        | 2       | I    |
-| 16          | 10     | 6        | 1       | I    |
-| 17          | 10     | 2        | 0       | I    |
-
+| 0           | 3      | 5        | 2       | I    |
+| 1           | 3      | 6        | 3       | I    |
+| 2           | 12     | 5        | 6       | I    |
 # Test 2
 
 ## Instructions
