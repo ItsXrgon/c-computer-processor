@@ -78,105 +78,112 @@ MOVI R8 30
 
 # ADD Test
 
+MOVI R0 -20
+MOVI R1 -10
+MOVI R2 15
+MOVI R3 14
+MOVI R4 3
+MOVI R5 0
+ADD R0 R1
+ADD R1 R2
+ADD R2 R1
+ADD R2 R3
+ADD R4 R5
+ADD R5 R1
+ADD R5 R5
+
 ## Instructions
 
-| ID  | Instruction | Opcode | Output              | Status Reg                  | Notes                             |
-| --- | ----------- | ------ | ------------------- | --------------------------- | --------------------------------- |
-| 0   | MOVI R0 -20 | 3      | R0 = -20            | nth                         | # doesn't show input negative     |
-| 1   | MOVI R1 -10 | 3      | R1 = -10            | nth                         | # doesn't show input negative     |
-| 2   | MOVI R2 15  | 3      | R2 = 15             | nth                         |                                   |
-| 3   | MOVI R3 14  | 3      | R3 = 14             | nth                         |                                   |
-| 4   | MOVI R4 3   | 3      | R4 = 3              | nth                         |                                   |
-| 5   | MOVI R5 0   | 3      | R5 = 0              | nth                         |                                   |
-| 6   | ADD R0 10   | 0      | R0 = -20 + 10 = -10 | C = V = S = Z = 0, N = 1    | # Need Nasser to take a look here |
-| 7   | ADD R3 R0   | 0      | R3 = 14             | C = V = N = S = Z = 0       |                                   |
-| 8   | ADD R1 10   | 0      | R1 = -10 + 10 = 0   | C = V = N = 0, S = 1, Z = 1 |                                   |
-| 9   | ADD R3 R1   | 0      | R3 = 14             | nth                         |                                   |
-| 10  | ADD R2 15   | 0      | R2 = 15 + 15 = 30   | C = V = N = S = Z = 0       | #output stays the same            |
-| 11  | ADD R2 15   | 0      | R2 = 30 + 15 = 45   | C = V = N = S = Z = 0       | #output satys the same            |
-| 12  | ADD R4 2    | 0      | R4 = 3 + 2 = 5      | C = V = N = S = Z = 0       | #no output                        |
-| 13  | ADD R4 5    | 0      | R4 = 5 + 5 = 10     | C = V = N = S = Z = 0       | #no output                        |
-| 14  | ADD R5 9    | 0      | R5 = 0 + 9 = 9      | C = V = N = S = Z = 0       | #wrong output                     |
-| 15  | ADD R5 10   | 0      | R5 = 9 + 10 = 19    | C = V = N = S = Z = 0       | #wrong output                     |
+| ID  | Instruction | Opcode | Output               | Status Reg               |
+| --- | ----------- | ------ | -------------------- | ------------------------ |
+| 0   | MOVI R0 -20 | 3      | R0 = -20             | nth                      |
+| 1   | MOVI R1 -10 | 3      | R1 = -10             | nth                      |
+| 2   | MOVI R2 15  | 3      | R2 = 15              | nth                      |
+| 3   | MOVI R3 14  | 3      | R3 = 14              | nth                      |
+| 4   | MOVI R4 3   | 3      | R4 = 3               | nth                      |
+| 5   | MOVI R5 0   | 3      | R5 = 0               | nth                      |
+| 6   | ADD R0 R1   | 0      | R0 = -20 + -10 = -30 | V = S = Z = 0, C = N = 1 |
+| 7   | ADD R1 R2   | 0      | R1 = -10 + 15 = 5    | N = V = S = Z = 0, C = 1 |
+| 8   | ADD R2 R1   | 0      | R2 = 15 + 5 = 20     | N = V = S = Z = C = 0    |
+| 9   | ADD R2 R3   | 0      | R2 = 20 + 14 = 34    | N = V = S = Z = C = 0    |
+| 10  | ADD R4 R5   | 0      | R4 = 3 + 0 = 3       | N = V = S = Z = C = 0    |
+| 11  | ADD R5 R1   | 0      | R5 = 0 + 5 = 5       | N = V = S = Z = C = 0    |
+| 12  | ADD R5 R5   | 0      | R5 = 5 + 5 = 10      | N = V = S = Z = C = 0    |
+
+## Registers
+
+| Register | Value |
+| -------- | ----- |
+| 0        | -30   |
+| 1        | 5     |
+| 2        | 20    |
+| 3        | 14    |
+| 4        | 3     |
+| 5        | 10    |
+
+## Instruction Memory
+
+| Instruction | Opcode | Register | Reg/IMM | Type |
+| ----------- | ------ | -------- | ------- | ---- |
+| 0           | 3      | 0        | -20     | I    |
+| 1           | 3      | 1        | -10     | I    |
+| 2           | 3      | 2        | 15      | I    |
+| 3           | 3      | 3        | 14      | I    |
+| 4           | 3      | 4        | 3       | I    |
+| 5           | 3      | 5        | 0       | I    |
+| 6           | 0      | 0        | 1       | R    |
+| 7           | 0      | 1        | 2       | R    |
+| 8           | 0      | 2        | 1       | R    |
+| 9           | 0      | 2        | 3       | R    |
+| 10          | 0      | 4        | 5       | R    |
+| 11          | 0      | 5        | 1       | R    |
+| 12          | 0      | 5        | 5       | R    |
+
+# SUB Test
+
+MOVI R0 -20
+MOVI R1 -10
+MOVI R2 15
+MOVI R3 14
+MOVI R4 3
+MOVI R5 0
+SUB R0 R1
+SUB R1 R2
+SUB R2 R1
+SUB R2 R3
+SUB R4 R5
+SUB R5 R1
+SUB R5 R5
+
+## Instructions
+
+| ID  | Instruction | Opcode | Output               | Status Reg               |
+| --- | ----------- | ------ | -------------------- | ------------------------ |
+| 0   | MOVI R0 -20 | 3      | R0 = -20             | nth                      |
+| 1   | MOVI R1 -10 | 3      | R1 = -10             | nth                      |
+| 2   | MOVI R2 15  | 3      | R2 = 15              | nth                      |
+| 3   | MOVI R3 14  | 3      | R3 = 14              | nth                      |
+| 4   | MOVI R4 3   | 3      | R4 = 3               | nth                      |
+| 5   | MOVI R5 0   | 3      | R5 = 0               | nth                      |
+| 6   | SUB R0 R1   | 1      | R0 = -20 - -10 = -10 | C = V = S = Z = 0, N = 1 |
+| 7   | SUB R1 R2   | 1      | R1 = -10 - 15 = -25  | N = V = S = Z = 0, N = 1 |
+| 8   | SUB R2 R1   | 1      | R2 = 15 - -25 = 40   | N = V = S = Z = C = 0    |
+| 9   | SUB R2 R3   | 1      | R2 = 40 - 14 = 26    | N = V = S = Z = C = 0    |
+| 10  | SUB R4 R5   | 1      | R4 = 3 - 0 = 3       | N = V = S = Z = C = 0    |
+| 11  | SUB R5 R1   | 1      | R5 = 0 - -25 = 25    | N = V = S = Z = C = 0    |
+| 12  | SUB R5 R5   | 1      | R5 = 25 - 25 = 0     | N = V = C = 0, Z = S = 1 |
 
 ## Registers
 
 | Register | Value |
 | -------- | ----- |
 | 0        | -10   |
-| 1        | 0     |
-| 2        | 45    |
-| 3        | 14    |
-| 4        | 10    |
-| 5        | 19    |
-
-## Data Memory
-
-| Address | Data |
-| ------- | ---- |
-
-## Instruction Memory
-
-| Instruction | Opcode | Register | Reg/IMM | Type |
-| ----------- | ------ | -------- | ------- | ---- |
-| 0           | 3      | 0        | -20     | I    |
-| 1           | 3      | 1        | -10     | I    |
-| 2           | 3      | 2        | 15      | I    |
-| 3           | 3      | 3        | 14      | I    |
-| 4           | 3      | 4        | 3       | I    |
-| 5           | 3      | 5        | 0       | I    |
-| 6           | 0      | 0        | 10      | R    |
-| 7           | 0      | 3        | R0      | R    |
-| 8           | 0      | 1        | 10      | R    |
-| 9           | 0      | 3        | R1      | R    |
-| 10          | 0      | 2        | 15      | R    |
-| 11          | 0      | 2        | 15      | R    |
-| 12          | 0      | 4        | 2       | R    |
-| 13          | 0      | 4        | 5       | R    |
-| 14          | 0      | 5        | 9       | R    |
-| 15          | 0      | 5        | 10      | R    |
-
-# SUB Test
-
-## Instructions
-
-| ID  | Instruction | Opcode | Output              | Status Reg               | Notes                         |
-| --- | ----------- | ------ | ------------------- | ------------------------ | ----------------------------- |
-| 0   | MOVI R0 -20 | 3      | R0 = -20            | nth                      | # doesn't show input negative |
-| 1   | MOVI R1 -10 | 3      | R1 = -10            | nth                      | # doesn't show input negative |
-| 2   | MOVI R2 15  | 3      | R2 = 15             | nth                      |                               |
-| 3   | MOVI R3 14  | 3      | R3 = 14             | nth                      |                               |
-| 4   | MOVI R4 3   | 3      | R4 = 3              | nth                      |                               |
-| 5   | MOVI R5 0   | 3      | R5 = 0              | nth                      |                               |
-| 6   | SUB R0 -2   | 1      | R0 = -20 - -2 = -18 | C = V = S = Z = 0, N = 1 | #TF the output is -15         |
-| 7   | SUB R1 2    | 1      | R1 = -10 - 2 = -12  | C = V = N = S = Z = 0    | #NO output                    |
-| 8   | SUB R2 R1   | 1      | R2 = 15             | C = V = N = S = Z = 0    |                               |
-| 9   | SUB R3 6    | 1      | R3 = 14 - 6 = 8     | C = V = N = S = Z = 0    | #NO output                    |
-| 10  | SUB R4 3    | 1      | R4 = 3 - 3 = 0      | C = V = N = S = Z = 1    | #NO output                    |
-| 11  | SUB R5 5    | 1      | R5 = 0 - 5 = -5     | C = V = N = S = Z = 0    | #NO output                    |
-| 12  | SUB R0 -1   | 1      | R0 = -18 - -1 = -17 | C = V = S = Z = 0, N = 1 | #TF the output is -15         |
-| 13  | SUB R1 1    | 1      | R1 = -12 - 1 = -13  | C = V = N = S = Z = 0    | #NO output                    |
-| 14  | SUB R2 R0   | 1      | R2 = 15             | C = V = N = S = Z = 0    | #TF the output is 30          |
-| 15  | SUB R3 -2   | 1      | R3 = 8 + 2 = 10     | C = V = N = S = Z = 0    | #TF the output is -16         |
-| 16  | SUB R4 3    | 1      | R4 = 0 - 3 = -3     | C = V = N = S = Z = 0    | #NO output                    |
-| 17  | SUB R5 -5   | 1      | R5 = -5 + 5 = 0     | C = V = N = S = Z = 1    |                               |
-
-## Registers
-
-| Register | Value |
-| -------- | ----- |
-| 0        | -17   |
-| 1        | -13   |
-| 2        | 15    |
-| 3        | 10    |
-| 4        | -3    |
+| 1        | -25   |
+| 2        | 40    |
+| 3        | 26    |
+| 4        | 3     |
 | 5        | 0     |
 
-## Data Memory
-
-| Address | Data |
-| ------- | ---- |
-
 ## Instruction Memory
 
 | Instruction | Opcode | Register | Reg/IMM | Type |
@@ -187,37 +194,20 @@ MOVI R8 30
 | 3           | 3      | 3        | 14      | I    |
 | 4           | 3      | 4        | 3       | I    |
 | 5           | 3      | 5        | 0       | I    |
-| 6           | 1      | 0        | -2      | R    |
+| 6           | 1      | 0        | 1       | R    |
 | 7           | 1      | 1        | 2       | R    |
-| 8           | 1      | 2        | R1      | R    |
-| 9           | 1      | 3        | 6       | R    |
-| 10          | 1      | 4        | 3       | R    |
-| 11          | 1      | 5        | 5       | R    |
-| 12          | 1      | 0        | -1      | R    |
-| 13          | 1      | 1        | 1       | R    |
-| 14          | 1      | 2        | R0      | R    |
-| 15          | 1      | 3        | -2      | R    |
-| 16          | 1      | 4        | 3       | R    |
-| 17          | 1      | 5        | -5      | R    |
+| 8           | 1      | 2        | 1       | R    |
+| 9           | 1      | 2        | 3       | R    |
+| 10          | 1      | 4        | 5       | R    |
+| 11          | 1      | 5        | 1       | R    |
+| 12          | 1      | 5        | 5       | R    |
 
 # MUL Test
 
 ## Instructions
 
-| ID  | Instruction | Opcode | Output             | Status Reg   | Notes                        |
-| --- | ----------- | ------ | ------------------ | ------------ | ---------------------------- |
-| 0   | MOVI R0 -5  | 3      | R0 = -5            | nth          | doesn't show input negative  |
-| 1   | MOVI R1 -10 | 3      | R1 = -10           | nth          | doesn't show input negative  |
-| 2   | MOVI R2 4   | 3      | R2 = 4             | nth          |                              |
-| 3   | MOVI R3 8   | 3      | R3 = 8             | nth          |                              |
-| 4   | MOVI R4 0   | 3      | R4 = 0             | nth          |                              |
-| 5   | MOVI R5 5   | 3      | R5 = 5             | nth          |                              |
-| 6   | MUL R0 2    | 2      | R0 = -5 x 2 = -10  | N = 1, Z = 0 | doesn't show output negative |
-| 7   | MUL R1 -2   | 2      | R1 = -10 x -2 = 20 |              | TF the output is 0           |
-| 8   | MUL R2 3    | 2      | R2 = 4 x 3 = 12    |              | NO output                    |
-| 9   | MUL R3 -2   | 2      | R3 = 8 x -2 = -16  |              | TF the output is 32          |
-| 10  | MUL R4 6    | 2      | R4 = 0 x 6 = 0     |              | NO output                    |
-| 11  | MUL R5 0    | 2      | R5 = 5 x 0 = 0     |              | NO output                    |
+| ID  | Instruction | Opcode | Output             | Status Reg   |
+| --- | ----------- | ------ | ------------------ | ------------ |
 
 ## Registers
 
