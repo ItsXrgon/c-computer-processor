@@ -174,7 +174,7 @@ int main()
 {
     ResetProcessor();
     // Only works with absolute path of the txt file
-    LoadProgram("/home/ashmxwy/Desktop/University/Work/CA/c-computer-processor/src/Test/ADD-Test.txt");
+    LoadProgram("/home/youssef/Documents/Guc/CA/project/c-computer-processor/src/Test/BR-Test.txt");
 
     /**
      * This function represents the main loop of the processor. It executes the pipeline stages

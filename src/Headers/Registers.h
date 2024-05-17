@@ -79,14 +79,14 @@ void PrintStatusRegister();
  *
  * @return The value of the program counter.
  */
-uint8_t GetPC();
+uint16_t GetPC();
 
 /**
  * Sets the value of the program counter (PC).
  *
  * @param value The value to be set as the program counter.
  */
-void SetPC(uint8_t value);
+void SetPC(uint16_t value);
 
 /**
  * Increments the value of the program counter (PC) by 1.
