@@ -619,177 +619,96 @@ LDR R2 0
 | 0           | 3      | 3        | 0       | I    |
 | 1           | 13     | 3        | 5       | I    |
 
-# Test 2
-
+# ALL Tests
+MOVI R0 10
+MOVI R9 8
+MOVI R29 10
+MOVI R29 4
+MOVI R39 3
+MOVI R49 5
+MOVI R59 6
+MOVI R60 2
+MUL R0 R60
+ADD R9 R60
+STR R59 0
+STR R60 1
+SAL R49 2
+SAR R4 R6
+LDR R5 2
+LDR R6 1
+LDR R2 0
 ## Instructions
 
-| ID  | Instruction | Opcode | Output                 | Status Reg                        |
-| --- | ----------- | ------ | ---------------------- | --------------------------------- |
-| 0   | MOVI R0 20  | 3      | R0 = 10                | NTH                               |
-| 1   | MOVI R9 10  | 3      | R9 = 8                 | nth                               |
-| 2   | MOVI R2 15  | 3      | R2 = 15                | nth                               |
-| 3   | MOVI R3 4   | 3      | R3 = 4                 | nth                               |
-| 4   | MOVI R4 3   | 3      | R4 = 3                 | nth                               |
-| 5   | MUL R9 R2   | 2      | R9 = 8 x 15 = 120      | N = 0 Z = 0                       |
-| 6   | ADD R9 R3   | 0      | R9 = 120 + 4 = 124     | C = 0, V = 0, N = 0, S = 0, Z = 0 |
-| 7   | MOVI R7 10  | 3      | R7 = 10                | nth                               |
-| 8   | MOVI R6 1   | 3      | R6 = 1                 | nth                               |
-| 9   | MUL R4 R7   | 2      | R4 = 10 x 3 = 30       | N = 0 Z = 0                       |
-| 10  | MUL R0 R7   | 2      | R0 = 10 x 10 = 100     | N = 0 Z = 0                       |
-| 11  | ADD R4 R0   | 0      | R4 = 30 + 100 = 130    | C = 0, V = 1, N = 0, S = 0, Z = 1 |
-| 12  | SUB R4 R6   | 1      | R4 = 1 - 130 = -129    | C = 0, V = 1, N = 1, S = 0, Z = 0 |
-| 13  | SUB R9 R4   | 1      | R9 = 124 - -129 = -353 | C = 0, V = 0, N = 1, S = 1, Z = 0 |
+| ID  | Instruction | Opcode | Output | Status Reg            |
+| --- | ----------- | ------ | ------ | --------------------- |
+| 0   | MOVI R0 10  | 3      | R0=10  | nth                   |
+| 1   | MOVI R9 8   | 3      | R9=8   | nth                   |
+| 2   | MOVI R29 10 | 3      | R29=10 | nth                   |
+| 3   | MOVI R29 4  | 3      | R29=4  | nth                   |
+| 4   | MOVI R39 3  | 3      | R39=3  | nth                   |
+| 5   | MOVI R49 5  | 3      | R49=5  | nth                   |
+| 6   | MOVI R59 6  | 3      | R59=6  | nth                   |
+| 7   | MOVI R60 2  | 3      | R60=2  | nth                   |
+| 8   | MUL R0 R60  | 2      | R0=20  | V = S = Z = N = C = 0 |
+| 9   | ADD R9 R60  | 0      | R9=10  | V = S = Z = N = C = 0 |
+| 10  | STR R59 0   | 11     | Mem[0]=6 | nth                   |
+| 11  | STR R60 1   | 11     | Mem[1]=2 | nth                   |
+| 12  | SAL R49 2   | 8      | R49=20  | V = S = Z = N = C = 0 |
+| 13  | SAR R4 R6   | 9      | R4=0    | V = S = Z = N = C = 0 |
+| 14  | LDR R5 2    | 10     | R5=6    | nth                   |
+| 15  | LDR R6 1    | 10     | R6=2    | nth                   |
+| 16  | LDR R2 0    | 10     | R2=6    | nth                   |
 
-## Registers
 
-| Register | Value | Comments                         |
-| -------- | ----- | -------------------------------- |
-| 0        | 100   |
-| 2        | 15    |
-| 3        | 4     |
-| 4        | -129  | overflow will occur will be -127 |
-| 6        | 1     |
-| 7        | 10    |
-| 9        | -383  | overflow occur will be -5        |
-
-## Status Register
-
-| Flage | Value |
-| ----- | ----- |
-| C     | 1     |
-| V     |       |
-| N     |       |
-| S     |       |
-| Z     |       |
-
-## Data Memory
-
-## Instruction Memory
-
-| Instruction | Opcode | Register | Reg/IMM | Type |
-| ----------- | ------ | -------- | ------- | ---- |
-| 0           | 3      | 0        | 20      | I    |
-| 1           | 3      | 9        | 10      | I    |
-| 2           | 3      | 2        | 15      | I    |
-| 3           | 3      | 3        | 4       | I    |
-| 4           | 3      | 4        | 3       | I    |
-| 5           | 2      | 9        | 2       | R    |
-| 6           | 0      | 9        | 3       | R    |
-| 7           | 3      | 7        | 10      | I    |
-| 8           | 3      | 6        | 1       | I    |
-| 9           | 2      | 4        | 7       | R    |
-| 10          | 2      | 0        | 7       | R    |
-| 11          | 0      | 4        | 0       | R    |
-| 12          | 1      | 4        | 6       | R    |
-| 13          | 1      | 9        | 4       | R    |
-
-# Test 3
-
-## Instructions
-
-| ID  | Instruction | Opcode | Output        | Status Reg |
-| --- | ----------- | ------ | ------------- | ---------- |
-| 0   | MOVI R0 10  | 3      | R0 = 10       | nth        |
-| 1   | MOVI R1 10  | 3      | R1 = 10       | nth        |
-| 2   | MOVI R3 20  | 3      | R3 = 20       | nth        |
-| 3   | SUB R0 R1   | 1      | R0 = 10-10=0  | nth        |
-| 4   | BEQZ R0 0   | 4      | R0=0          | nth        |
-| 5   | ADD R3 R1   | 0      | R3 = 20+10=30 | nth        |
-| 6   | BR R0 R1    | 7      | R0=0          | nth        |
-| 7   | STR R0 0    | 11     | Mem[0]= 0     | nth        |
-
-smo please format into table
 
 ## Registers
 
 | Register | Value |
 | -------- | ----- |
-| 0        | 0     |
-| 1        | 10    |
-| 3        | 30    |
+| 0        | 20    |
+| 9        | 10    |
+| 29       | 4     |
+| 39       | 3     |
+| 49       | 20    |
+| 59       | 6     |
+| 60       | 2     |
+| 4        | 0     |
+| 5        | 6     |
+| 6        | 2     |
+| 2        | 6     |
+
 
 ## Data Memory
 
-| Address | Data |
-| ------- | ---- |
-| 0       | 0    |
+| Address | Value |
+| ------- | ----- |
+| 0       | 6     |
+| 1       | 2     |
+
+
 
 ## Instruction Memory
 
 | Instruction | Opcode | Register | Reg/IMM | Type |
 | ----------- | ------ | -------- | ------- | ---- |
 | 0           | 3      | 0        | 10      | I    |
-| 1           | 3      | 1        | 10      | I    |
-| 2           | 3      | 3        | 20      | I    |
-| 3           | 1      | 0        | 1       | R    |
-| 4           | 4      | 0        | 0       | I    |
-| 5           | 0      | 3        | 1       | R    |
-| 6           | 7      | 0        | 1       | R    |
-| 7           | 11     | 0        | 0       | I    |
+| 1           | 3      | 9        | 8       | I    |
+| 2           | 3      | 29       | 10      | I    |
+| 3           | 3      | 29       | 4       | I    |
+| 4           | 3      | 39       | 3       | I    |
+| 5           | 3      | 49       | 5       | I    |
+| 6           | 3      | 59       | 6       | I    |
+| 7           | 3      | 60       | 2       | I    |
+| 8           | 2      | 0        | 60      | R    |
+| 9           | 0      | 9        | 60      | R    |
+| 10          | 11     | 59       | 0       | R    |
+| 11          | 11     | 60       | 1       | R    |
+| 12          | 8      | 49       | 2       | R    |
+| 13          | 9      | 4        | 6       | R    |
+| 14          | 10     | 5        | 2       | R    |
+| 15          | 10     | 6        | 1       | R    |
+| 16          | 10     | 2        | 0       | R    |
 
-# Test 4
 
-## Instructions
 
-| ID  | Instruction | Opcode | Output         | Status Reg          |
-| --- | ----------- | ------ | -------------- | ------------------- |
-| 0   | MOVI R0 0   | 3      | R0 = 0         | nth                 |
-| 1   | MOVI R1 1   | 3      | R1 = 1         | nth                 |
-| 2   | MOVI R2 0   | 3      | R2 = 0         | nth                 |
-| 3   | MOVI R3 4   | 3      | R3 = 4         | nth                 |
-| 4   | MOVI R4 7   | 3      | R4 = 7         | nth                 |
-| 5   | MOVI R5 16  | 3      | R5 = 16        | nth                 |
-| 6   | MOVI R6 1   | 3      | R6 = 1         | nth                 |
-| 7   | ADD R2 R1   | 0      | R2 = 0 + 1 = 1 | C = V = N = S = Z = |
-| 8   | SUB R3 R1   | 1      | R3 = 4 - 1 = 3 | V = N = S = Z =     |
-| 9   | SAL R6 1    | 8      | R6 = 2         | N = Z =             |
-| 10  | SAR R5 1    | 9      | R5 = 8         | N = Z =             |
-| 11  | STR R5 0    | 11     | Mem[0] = 8     | nth                 |
-| 12  | STR R6 1    | 11     | Mem[1] = 2     | nth                 |
-| 13  | STR R2 2    | 11     | Mem[2] = 1     | nth                 |
-| 14  | LDR R5 2    | 10     | R5 = 1         | nth                 |
-| 15  | LDR R6 1    | 10     | R6 = 2         | nth                 |
-| 16  | LDR R2 0    | 10     | R2 = 8         | nth                 |
 
-smo please format into table
-
-## Registers
-
-| Register | Value |
-| -------- | ----- |
-| 1        | 1     |
-| 2        | 8     |
-| 3        | 3     |
-| 4        | 7     |
-| 5        | 1     |
-| 6        | 2     |
-
-## Data Memory
-
-| Address | Data |
-| ------- | ---- |
-| 0       | 8    |
-| 1       | 2    |
-| 2       | 1    |
-
-## Instruction Memory
-
-| Instruction | Opcode | Register | Reg/IMM | Type |
-| ----------- | ------ | -------- | ------- | ---- |
-| 0           | 3      | 0        | 0       | I    |
-| 1           | 3      | 1        | 1       | I    |
-| 2           | 3      | 2        | 0       | I    |
-| 3           | 3      | 3        | 4       | I    |
-| 4           | 3      | 4        | 5       | I    |
-| 5           | 3      | 5        | 16      | I    |
-| 6           | 4      | 3        | 1       | I    |
-| 7           | 0      | 2        | 1       | R    |
-| 8           | 1      | 3        | 1       | R    |
-| 9           | 8      | 6        | 1       | I    |
-| 10          | 9      | 5        | 1       | I    |
-| 11          | 11     | 5        | 0       | I    |
-| 12          | 11     | 6        | 1       | I    |
-| 13          | 11     | 2        | 2       | I    |
-| 14          | 10     | 5        | 2       | I    |
-| 15          | 10     | 6        | 1       | I    |
-| 16          | 10     | 2        | 0       | I    |
