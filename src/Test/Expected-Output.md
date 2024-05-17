@@ -474,36 +474,32 @@ ANDI R5 15
 
 ## Instructions
 
-| ID  | Instruction | Opcode | Output | Status Reg | Notes |
-| --- | ----------- | ------ | ------ | ---------- | ----- |
-| 0   | MOVI R0 0   | 3      | R0=0   |            |       |
-| 1   | MOVI R1 1   | 3      | R1=1   |            |       |
-| 2   | MOVI R2 12  | 3      | R2=12  |            |       |
-| 3   | MOVI R3 4   | 3      | R3=4   |            |       |
-| 4   | MOVI R4 7   | 3      | R4=7   |            |       |
-| 5   | MOVI R5 16  | 3      | R5=16  |            |       |
-| 6   | MOVI R6 3   | 3      | R6=3   |            |       |
-| 7   | ANDI R0 1   | 5      | R0=0   |            |       |
-| 8   | ANDI R1 2   | 5      | R1=1   |            |       |
-| 9   | ANDI R2 15  | 5      | R2=12  |            |       |
-| 10  | ANDI R3 3   | 5      | R3=0   |            |       |
-| 11  | ANDI R4 6   | 5      | R4=6   |            |       |
-| 12  | ANDI R5 15  | 5      | R5=0   |            |       |
-| 13  | ANDI R6 3   | 5      | R6=3   |            |       |
+| ID  | Instruction | Opcode | Output | Status Reg                |
+| --- | ----------- | ------ | ------ | ------------------------- |
+| 0   | MOVI R0 0   | 3      | R0=0   | nth                       |
+| 1   | MOVI R1 1   | 3      | R1=1   | nth                       |
+| 2   | MOVI R2 12  | 3      | R2=12  | nth                       |
+| 3   | MOVI R3 4   | 3      | R3=4   | nth                       |
+| 4   | MOVI R4 7   | 3      | R4=7   | nth                       |
+| 5   | MOVI R5 16  | 3      | R5=16  | nth                       |
+| 6   | MOVI R6 3   | 3      | R6=3   | nth                       |
+| 7   | ANDI R0 1   | 5      | R0=0   | V = S = N = C = 0 , Z = 1 |
+| 8   | ANDI R1 2   | 5      | R1=0   | V = S = N = C = 0 , Z = 1 |
+| 9   | ANDI R2 15  | 5      | R2=12  | V = S = N = C = Z = 0     |
+| 10  | ANDI R3 3   | 5      | R3=0   | V = S = N = C = 0 , Z = 1 |
+| 11  | ANDI R4 6   | 5      | R4=6   | V = S = N = C = Z = 0     |
+| 12  | ANDI R5 15  | 5      | R5=0   | V = S = N = C = 0 , Z = 1 |
 
 ## Registers
 
 | Register | Value |
 | -------- | ----- |
 | 0        | 0     |
-| 1        | 1     |
+| 1        | 0     |
 | 2        | 12    |
 | 3        | 0     |
 | 4        | 6     |
 | 5        | 0     |
-| 6        | 3     |
-
-## Data Memory
 
 ## Instruction Memory
 
@@ -522,7 +518,62 @@ ANDI R5 15
 | 10          | 5      | 3        | 3       | I    |
 | 11          | 5      | 4        | 6       | I    |
 | 12          | 5      | 5        | 15      | I    |
-| 13          | 5      | 6        | 3       | I    |
+
+# LDR - STR Test
+
+MOVI R0 5
+MOVI R1 10
+MOVI R2 20
+STR R0 0
+STR R1 1
+STR R2 2
+LDR R0 2
+LDR R1 1
+LDR R2 0
+
+## Instructions
+
+| ID  | Instruction | Opcode | Output | Status Reg |
+| --- | ----------- | ------ | ------ | ---------- |
+| 0   | MOVI R0 5   | 3      | R0=5   | nth        |
+| 1   | MOVI R1 10  | 3      | R1=10  | nth        |
+| 2   | MOVI R2 20  | 3      | R2=20  | nth        |
+| 3   | STR R0 0    | 11     | nth    | nth        |
+| 4   | STR R1 1    | 11     | nth    | nth        |
+| 5   | STR R2 2    | 11     | nth    | nth        |
+| 6   | LDR R0 2    | 10     | R0=20  | nth        |
+| 7   | LDR R1 1    | 10     | R1=10  | nth        |
+| 8   | LDR R2 0    | 10     | R2=5   | nth        |
+
+## Registers
+
+| Register | Value |
+| -------- | ----- |
+| 0        | 20    |
+| 1        | 10    |
+| 2        | 5     |
+
+## Data Memory
+
+| Address | Value |
+| ------- | ----- |
+| 0       | 5     |
+| 1       | 10    |
+| 2       | 20    |
+
+## Instruction Memory
+
+| Instruction | Opcode | Register | Reg/IMM | Type |
+| ----------- | ------ | -------- | ------- | ---- |
+| 0           | 3      | 0        | 5       | I    |
+| 1           | 3      | 1        | 10      | I    |
+| 2           | 3      | 2        | 20      | I    |
+| 3           | 11     | 0        | 0       | I    |
+| 4           | 11     | 1        | 1       | I    |
+| 5           | 11     | 2        | 2       | I    |
+| 6           | 10     | 0        | 2       | I    |
+| 7           | 10     | 1        | 1       | I    |
+| 8           | 10     | 2        | 0       | I    |
 
 # Test 1
 
